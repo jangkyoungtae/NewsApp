@@ -2836,7 +2836,7 @@
     "expo-modules-core" "~0.2.0"
     "uuid" "^3.4.0"
 
-"expo-font@~9.2.1":
+"expo-font@^9.2.1", "expo-font@~9.2.1":
   "integrity" "sha512-sT9nm2Dt1nTLz+Ir1fSpyzqH40eJX324Wu5sPyvT2Ivnmu2rw2rxt3gNa8Kvdb8BPRz4qrRvHR/E+YKMqa6ZgQ=="
   "resolved" "https://registry.npmjs.org/expo-font/-/expo-font-9.2.1.tgz"
   "version" "9.2.1"
