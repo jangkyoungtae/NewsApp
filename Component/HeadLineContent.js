@@ -30,12 +30,12 @@ const Contents = styled.Text`
     
 `
 
-export default () => {
+export default ({title,content}) => {
     return (
         <HeadLineContainer>            
             <TextContainer>
-                <Title numberOfLines={1}>오늘의 기사 제목</Title>
-                <Contents numberOfLines={3}>오늘의 기사 내용은 이것입니다. 앞으로도 계속 바뀌지 않고 이것일 것입니다. 바뀌지 않는다고 하여 당황 하지 마시고 잘 읽어 보시기를 바랍니다.</Contents>
+                <Title numberOfLines={1}>{title}</Title>
+                <Contents numberOfLines={3}>{content}</Contents>
             </TextContainer>
 
         </HeadLineContainer>

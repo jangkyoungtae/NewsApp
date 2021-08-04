@@ -18,7 +18,7 @@ const ImageContainer = styled.View`
 const ImageBox = styled.Image`
     height:100%; 
     width:100%;
-    background-color:black;
+    background-color:white;
     
 `
 const TextContainer = styled.View`
@@ -43,15 +43,15 @@ const Contents = styled.Text`
     
 `
 
-export default () => {
+export default ({url,title,content}) => {
     return (
         <PhotoContainer>
             <ImageContainer>
-                <ImageBox source={{uri :"https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAyMDZfMSAg%2FMDAxNjEyNjE0MTE0NzYy.1J99lNQa-aL9FOKqxSjo8iZB23nEH3uN1jALu8Vi00og.PqSsXeNdK79c5_-sRsMXaIZJ2btneNfVoZmJCqj3tNcg.JPEG.arok-yera%2F1.jpg&type=sc960_832"}}/>
+                <ImageBox source={{uri :url}}/>
             </ImageContainer>
             <TextContainer>
-                <Title numberOfLines={1}>오늘의 기사 제목</Title>
-                <Contents numberOfLines={3}>오늘의 기사 내용은 이것입니다. 앞으로도 계속 바뀌지 않고 이것일 것입니다. 바뀌지 않는다고 하여 당황 하지 마시고 잘 읽어 보시기를 바랍니다.</Contents>
+                <Title numberOfLines={1}>{title}</Title>
+                <Contents numberOfLines={3}>{content}</Contents>
             </TextContainer>
 
         </PhotoContainer>
