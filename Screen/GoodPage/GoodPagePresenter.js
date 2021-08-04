@@ -1,17 +1,33 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState }  from 'react';
-import { ActivityIndicator, Button, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator,  Button, ScrollView, Text, View } from 'react-native';
 import HeadLineContent from '../../Component/HeadLineContent';
 import PhotoContent from '../../Component/PhotoContent';
 import RecommendContent from '../../Component/RecommendContent';
 
-export default ({ route, loading }) => {
-    const [sort, setSort] = useState(1);
-    const boardSort = () => {
-        if (sort < 3 ) {
-            setSort(sort + 1);
+export default ({ route, loading, sort, setInfo, setLoading }) => {
+    const [sorts, setSort] = useState(sort);
+    const callSort = async() => {
+        setLoading(true);
+        await AsyncStorage.getItem("sort").then((result) => {
+            setLoading(false);
+            setSort(result);
+        });    
+    }
+  
+       const boardSort = () => {
+        if (Number(sort) < 3) {            
+           AsyncStorage.setItem("sort", ""+(Number(sort)+1), () => {
+               console.log('정렬 저장 완료:' + sort);
+               setInfo(Number(sort)+1);
+            });
         } else {
-            setSort(1);
-        }
+            AsyncStorage.setItem("sort", '1', () => {
+                console.log('정렬 저장 완료:' + 1);
+                setInfo('1');
+            });
+           }
+           callSort();
     }
     const images = [
         {
@@ -51,22 +67,26 @@ export default ({ route, loading }) => {
         
 
     ]
+    
+    
+    
     return (
     <>
             {!loading ? <View>
-                <Button title={'정렬'} onPress={boardSort}/>
-                    <ScrollView>
-                    {sort == 1 &&
+                
+                <ScrollView>
+                    <Button title={'정렬'} onPress={boardSort}/>
+                    {sorts == 1 &&
                         images.map((item) => {
                           return  <RecommendContent key={item.id} {...item} />
                         })
                     }
-                    {sort == 2 &&
+                    {sorts == 2 &&
                         images.map((item) => {
                            return <PhotoContent key={item.id} {...item} />
                         })
                     }
-                    {sort == 3 &&
+                    {sorts == 3 &&
                         images.map((item) => {
                            return <HeadLineContent key={item.id} {...item} />
                         })
