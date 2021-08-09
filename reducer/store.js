@@ -7,7 +7,7 @@ const changeSort = (sort) => {
         sort
     }
 }
-const reducer = (state='1',action) => {
+const reducer = (state='',action) => {
     if (action.type === "SORT") {
         return action.sort;
     } else {
