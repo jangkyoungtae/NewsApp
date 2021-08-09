@@ -1,13 +1,13 @@
 import React, { useLayoutEffect ,useState,useEffect} from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import GoodPage from '../Screen/GoodPage'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { connect } from 'react-redux';
 
 
 
 const Tab = createMaterialTopTabNavigator();
 
-export default ({ navigation, route }) => {
+export default ({ navigation, route }) =>{
     useLayoutEffect(() => {
         navigation.setOptions({ title: '뉴스플레이' });
     }, [route]);
@@ -96,3 +96,4 @@ export default ({ navigation, route }) => {
         </Tab.Navigator>
     );
 };
+

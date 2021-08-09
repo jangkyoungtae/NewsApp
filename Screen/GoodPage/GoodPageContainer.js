@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import * as Font from 'expo-font';
 import GoodPagePresenter from './GoodPagePresenter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { connect } from 'react-redux';
+import { actionCreators } from '../../reducer/store';
 
-export default ({ route }) => {
+
+function GoodPageContainer({ route,sort, changeSort}){
     const [loading, setLoading] = useState(true);
-        const [info, setInfo] = useState("1");
+        
     const isEmpty = function (value) {
         if (
             value === '' ||
@@ -20,7 +23,7 @@ export default ({ route }) => {
     };
     const boardSort = (sort) => {
         AsyncStorage.setItem("sort", sort, () => {
-            setInfo(sort);
+            changeSort(sort);
           
         });
     }
@@ -36,8 +39,8 @@ export default ({ route }) => {
                 }
                 if (result === null || result === undefined) {                    
                     boardSort("1");
-                } else {
-                    setInfo(result);
+                } else {                    
+                    changeSort(result);
                 } 
             });
         });
@@ -48,6 +51,17 @@ export default ({ route }) => {
             setLoading(false);
         });
         getItemFromAsync("sort");
-    }, [info]);
-    return <GoodPagePresenter route={route} sort={info} setInfo={setInfo} loading={loading} setLoading={setLoading}/>
+    }, []);
+        return <GoodPagePresenter route={route} sort={sort} changeSort={boardSort} loading={loading} setLoading={setLoading}/>
 }
+function mapStateToProps(state) {   
+    return {
+        sort: state,
+    };
+}
+function mapDispatchToProps(dispatch, ownProps) {
+    return {
+        changeSort: sort => dispatch(actionCreators.changeSort(sort)),        
+    };
+}
+export default connect(mapStateToProps,mapDispatchToProps)(GoodPageContainer);
