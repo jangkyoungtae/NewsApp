@@ -15,7 +15,7 @@ function GoodPageContainer({ route,sort, changeSort}){
     });
 
     const getData = async() => {
-       var category = "business";
+        var category = "business";
         if (route.name === "IT") {
             category = 'technology';
         }else if (route.name === "문화") {
