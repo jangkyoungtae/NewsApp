@@ -1940,6 +1940,13 @@
   "resolved" "https://registry.npmjs.org/atob/-/atob-2.1.2.tgz"
   "version" "2.1.2"
 
+"axios@^0.21.1":
+  "integrity" "sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA=="
+  "resolved" "https://registry.npmjs.org/axios/-/axios-0.21.1.tgz"
+  "version" "0.21.1"
+  dependencies:
+    "follow-redirects" "^1.10.0"
+
 "babel-plugin-dynamic-import-node@^2.3.3":
   "integrity" "sha512-jZVI+s9Zg3IqA/kdi0i6UDCybUI3aSBLnglhYbSSjKlV7yF1F/5LWv8MakQmvYpnbJDS6fcBL2KzHSxNCMtWSQ=="
   "resolved" "https://registry.npmjs.org/babel-plugin-dynamic-import-node/-/babel-plugin-dynamic-import-node-2.3.3.tgz"
@@ -3199,6 +3206,11 @@
     "locate-path" "^6.0.0"
     "path-exists" "^4.0.0"
 
+"follow-redirects@^1.10.0":
+  "integrity" "sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg=="
+  "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.1.tgz"
+  "version" "1.14.1"
+
 "fontfaceobserver@^2.1.0":
   "integrity" "sha512-ReOsO2F66jUa0jmv2nlM/s1MiutJx/srhAe2+TE8dJCMi02ZZOcCTxTCQFr3Yet+uODUtnr4Mewg+tNQ+4V1Ng=="
   "resolved" "https://registry.npmjs.org/fontfaceobserver/-/fontfaceobserver-2.1.0.tgz"
@@ -4447,6 +4459,11 @@
   "integrity" "sha512-iniQP4rj1FhBdBYS/+eQv7j1tadJ9lJtdzgOpvsOHng/GbcDh2Fhdeq+ZRldrPYdXvCyfFUmFeEwEGXZB5I/AQ=="
   "resolved" "https://registry.npmjs.org/mockdate/-/mockdate-3.0.5.tgz"
   "version" "3.0.5"
+
+"moment@^2.29.1":
+  "integrity" "sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ=="
+  "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz"
+  "version" "2.29.1"
 
 "ms@2.0.0":
   "integrity" "sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g="
@@ -5925,6 +5942,13 @@
   "integrity" "sha1-rOEWq1V80Zc4ak6I9GhTeMiy5Po="
   "resolved" "https://registry.npmjs.org/ultron/-/ultron-1.0.2.tgz"
   "version" "1.0.2"
+
+"unescape@^1.0.1":
+  "integrity" "sha512-O0+af1Gs50lyH1nUu3ZyYS1cRh01Q/kUKatTOkSs7jukXE6/NebucDVxyiDsA9AQ4JC1V1jUH9EO8JX2nMDgGQ=="
+  "resolved" "https://registry.npmjs.org/unescape/-/unescape-1.0.1.tgz"
+  "version" "1.0.1"
+  dependencies:
+    "extend-shallow" "^2.0.1"
 
 "unicode-canonical-property-names-ecmascript@^1.0.4":
   "integrity" "sha512-jDrNnXWHd4oHiTZnx/ZG7gtUTVp+gCcTTKr8L0HjlwphROEW3+Him+IpvC+xcJEFegapiMZyZe02CyuOnRmbnQ=="

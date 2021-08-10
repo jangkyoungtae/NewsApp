@@ -1,7 +1,14 @@
 import React, { useLayoutEffect ,useState,useEffect} from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import GoodPage from '../Screen/GoodPage'
-import { connect } from 'react-redux';
+import ITPage from '../Screen/ITPage';
+import CulturePage from '../Screen/CulturePage';
+import EnterPage from '../Screen/EnterPage';
+import SportsPage from '../Screen/SportsPage';
+import EconomyPage from '../Screen/EconomyPage';
+
+
+
 
 
 
@@ -48,50 +55,32 @@ export default ({ navigation, route }) =>{
                 },
             }}
         >
-            <Tab.Screen name="헤드라인" component={GoodPage}
+           
+            <Tab.Screen name="경제" component={EconomyPage} 
                 initialParams={{
                 name: route.name,
             }}/>
-            <Tab.Screen name="경제" component={GoodPage} 
+            <Tab.Screen name="IT" component={ITPage} 
                 initialParams={{
                 name: route.name,
             }}/>
-            <Tab.Screen name="IT" component={GoodPage} 
+            <Tab.Screen name="문화" component={CulturePage} 
                 initialParams={{
                 name: route.name,
-            }}/>
-            <Tab.Screen name="문화" component={GoodPage} 
-                initialParams={{
-                name: route.name,
-            }}/>
+            }}/>            
             <Tab.Screen name="과학" component={GoodPage} 
                 initialParams={{
                 name: route.name,
-            }}/>
-            <Tab.Screen name="생활" component={GoodPage} 
+                }} />
+            <Tab.Screen name="연예" component={EnterPage} 
                 initialParams={{
                 name: route.name,
             }}/>
-            <Tab.Screen name="스포츠" component={GoodPage} 
+            <Tab.Screen name="스포츠" component={SportsPage} 
                 initialParams={{
                 name: route.name,
             }}/>
-            <Tab.Screen name="문화1" component={GoodPage} 
-                initialParams={{
-                name: route.name,
-            }}/>
-            <Tab.Screen name="과학2" component={GoodPage} 
-                initialParams={{
-                name: route.name,
-            }}/>
-            <Tab.Screen name="생활3" component={GoodPage} 
-                initialParams={{
-                name: route.name,
-            }}/>
-            <Tab.Screen name="스포츠4" component={GoodPage} 
-                initialParams={{
-                name: route.name,
-            }}/>
+        
 
         </Tab.Navigator>
     );

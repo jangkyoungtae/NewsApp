@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 import styled from 'styled-components';
-
+import moment from 'moment'; 
 const HeadLineContainer = styled.View`    
     flex:1;
     width:100%;
@@ -30,14 +30,26 @@ const Contents = styled.Text`
     
 `
 
-export default ({title,content}) => {
+const DateText = styled.Text`
+    color:#a0a0a0;
+    font-size :12px;
+    width:100%;
+    line-height:14px;
+     margin-left:10px;  
+`
+export default ({ title, content, date }) => {
+    const dateForm = moment(date).format("YYYY-MM-DD HH:mm");
     return (
-        <HeadLineContainer>            
-            <TextContainer>
-                <Title numberOfLines={1}>{title}</Title>
-                <Contents numberOfLines={3}>{content}</Contents>
-            </TextContainer>
-
-        </HeadLineContainer>
+    <>
+        {content &&
+            <HeadLineContainer>            
+                <TextContainer>
+                    <DateText>{dateForm}</DateText>
+                    <Title numberOfLines={1}>{title}</Title>
+                    <Contents numberOfLines={3}>{content}</Contents>
+                </TextContainer>
+            </HeadLineContainer>
+        }
+    </>
     );
 }

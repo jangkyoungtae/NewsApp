@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import * as Font from 'expo-font';
-import GoodPagePresenter from './GoodPagePresenter';
+import SportsPagePresenter from './SportsPagePresenter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
 import { actionCreators } from '../../reducer/store';
 import { recomendApi } from '../../api/api';
 
 
-function GoodPageContainer({ route, sort, changeSort }) {
-    
+function GoodPageContainer({ route,sort, changeSort}){
     const [loading, setLoading] = useState(true);
     const [searData, setSearData] = useState({        
         newsContents: [],
@@ -16,6 +15,7 @@ function GoodPageContainer({ route, sort, changeSort }) {
     });
 
     const getData = async() => {
+        
         var category = "business";
         if (route.name === "IT") {
             category = 'technology';
@@ -83,7 +83,7 @@ function GoodPageContainer({ route, sort, changeSort }) {
         });
         
     }, []);
-    return <GoodPagePresenter route={route} sort={sort} changeSort={boardSort} {...searData} loading={loading} setLoading={setLoading}/>
+    return <SportsPagePresenter route={route} sort={sort} changeSort={boardSort} {...searData} loading={loading} setLoading={setLoading}/>
 }
 function mapStateToProps(state) {   
     return {

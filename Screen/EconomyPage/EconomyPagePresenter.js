@@ -7,7 +7,7 @@ import RecommendContent from '../../Component/RecommendContent';
 
 export default ({ loading, sort, newsContents }) => {
     
-    
+    console.log(newsContents);
     const renderItem = ({item}) => {
         if(sort == 1 )
             return <RecommendContent

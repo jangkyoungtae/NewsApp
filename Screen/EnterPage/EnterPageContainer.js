@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import * as Font from 'expo-font';
-import GoodPagePresenter from './GoodPagePresenter';
+import EnterPagePresenter from './EnterPagePresenter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
 import { actionCreators } from '../../reducer/store';
 import { recomendApi } from '../../api/api';
 
 
-function GoodPageContainer({ route, sort, changeSort }) {
-    
+function GoodPageContainer({ route,sort, changeSort}){
     const [loading, setLoading] = useState(true);
     const [searData, setSearData] = useState({        
         newsContents: [],
@@ -30,7 +29,6 @@ function GoodPageContainer({ route, sort, changeSort }) {
         }
          
         const [newsContents, newsContentsError] = await recomendApi.newsSearch(category);
-       
         setSearData({            
             newsContents,
             newsContentsError
@@ -83,7 +81,7 @@ function GoodPageContainer({ route, sort, changeSort }) {
         });
         
     }, []);
-    return <GoodPagePresenter route={route} sort={sort} changeSort={boardSort} {...searData} loading={loading} setLoading={setLoading}/>
+    return <EnterPagePresenter route={route} sort={sort} changeSort={boardSort} {...searData} loading={loading} setLoading={setLoading}/>
 }
 function mapStateToProps(state) {   
     return {
