@@ -8,32 +8,35 @@ import RecommendContent from '../../Component/RecommendContent';
 export default ({ loading, sort, newsContents }) => {
     
     
-    const renderItem = ({item}) => {
-        if(sort == 1 )
-            return <RecommendContent
-                key={item.id}
-                title={item.title}
-                content={item.description}
-                url={item.urlToImage}
-                date={item.publishedAt}
-            />
-        else if(sort == 2 )
-            return <PhotoContent
-                key={item.id}
-                title={item.title}
-                content={item.description}
-                url={item.urlToImage}
-                date={item.publishedAt}
-            />
-        else if(sort == 3)
-            return <HeadLineContent
-                key={item.id}
-                title={item.title}
-                content={item.description}
-                url={item.urlToImage}
-                date={item.publishedAt}
-            />
-        
+    
+    const renderItem = ({ item }) => {
+        if (item.ImageUrl !== "" && item.ImageUrl !==undefined) {            
+           
+            if(sort == 1 )
+                return <RecommendContent
+                    key={item.id}
+                    title={item.title}
+                    content={item.content}
+                    imageUrl={item.ImageUrl}
+                    date={item.date}
+                />
+            else if(sort == 2 )
+                return <PhotoContent
+                    key={item.id}
+                    title={item.title}
+                    content={item.content}
+                    url={item.ImageUrl}
+                    date={item.date}
+                />
+            else if(sort == 3)
+                return <HeadLineContent
+                    key={item.id}
+                    title={item.title}
+                    content={item.content}
+                    url={item.ImageUrl}
+                    date={item.date}
+                />
+        }
     }
     return (
     <>

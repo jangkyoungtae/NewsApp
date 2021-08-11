@@ -51,22 +51,34 @@ const DateText = styled.Text`
     line-height:14px;
      margin-left:10px;  
 `
-export default ({ url, title, content, date }) => {
-    const dateForm = moment(date).format("YYYY-MM-DD HH:mm");
-    const con = unescape(content);
+export default ({ imageUrl, title, content, date }) => {  
+    
+    const isEmpty = function (value) {
+        if (
+            value === '' ||
+            value === null ||
+            value === undefined ||
+            (value !== null && typeof value === 'object' && !Object.keys(value).length)
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    };
     return (
     <>
-        {url &&< RecommendContainer >
-            <ImageContainer>
-                <ImageBox source={{uri :url}}/>
-            </ImageContainer>
+            {!isEmpty(imageUrl) && <RecommendContainer>
+            
+                <ImageContainer>
+                    <ImageBox source={{ uri: imageUrl }} />
+                </ImageContainer>
                 <TextContainer>
-                    <DateText>{dateForm}</DateText>
-                <Title numberOfLines={1}>{title}</Title>
-                <Contents numberOfLines={3}>{con}</Contents>
-            </TextContainer>
+                    <DateText>{date}</DateText>
+                    <Title numberOfLines={1}>{title}</Title>
+                    <Contents numberOfLines={3}>{content}</Contents>
+                </TextContainer>
 
-            </RecommendContainer >}
-    </>
+            </RecommendContainer>}
+     </>
     );
 }

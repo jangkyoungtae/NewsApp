@@ -38,18 +38,16 @@ const DateText = styled.Text`
      margin-left:10px;  
 `
 export default ({ title, content, date }) => {
-    const dateForm = moment(date).format("YYYY-MM-DD HH:mm");
     return (
     <>
-        {content &&
-            <HeadLineContainer>            
-                <TextContainer>
-                    <DateText>{dateForm}</DateText>
-                    <Title numberOfLines={1}>{title}</Title>
-                    <Contents numberOfLines={3}>{content}</Contents>
-                </TextContainer>
-            </HeadLineContainer>
-        }
+        <HeadLineContainer>            
+            <TextContainer>
+                <DateText>{date}</DateText>
+                <Title numberOfLines={1}>{title}</Title>
+                <Contents numberOfLines={3}>{content}</Contents>
+            </TextContainer>
+        </HeadLineContainer>
+        
     </>
     );
 }

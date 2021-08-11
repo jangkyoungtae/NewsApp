@@ -29,9 +29,9 @@ function GoodPageContainer({ route,sort, changeSort}){
         }
          
         const [newsContents, newsContentsError] = await recomendApi.newsSearch(category);
-       
+        const jsondata = JSON.parse(JSON.stringify(newsContents));
         setSearData({            
-            newsContents,
+            newsContents: jsondata,
             newsContentsError
         });
         

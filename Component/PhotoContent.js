@@ -1,8 +1,6 @@
 import React from 'react';
-import { Text } from 'react-native';
 import styled from 'styled-components';
-import moment from 'moment';
-import unescape from 'unescape';
+
 const PhotoContainer = styled.View`    
     flex:1;
     width:100%;
@@ -52,22 +50,19 @@ const DateText = styled.Text`
 `
 
 export default ({ url, title, content, date }) => {
-    const dateForm = moment(date).format("YYYY-MM-DD HH:mm");
-     const con = unescape(content);
     return (
         <>
-            {url &&
-                <PhotoContainer>
-                    <ImageContainer>
-                        <ImageBox source={{ uri: url }} />
-                    </ImageContainer>                
-                    <TextContainer>
-                        <DateText>{dateForm}</DateText>
-                        <Title numberOfLines={1}>{title}</Title>
-                        <Contents numberOfLines={3}>{con}</Contents>
-                    </TextContainer>
-                </PhotoContainer>
-            }
-    </>
+            <PhotoContainer>
+                <ImageContainer>
+                    <ImageBox source={{ uri: url }} />
+                </ImageContainer>                
+                <TextContainer>
+                    <DateText>{date}</DateText>
+                    <Title numberOfLines={1}>{title}</Title>
+                    <Contents numberOfLines={3}>{content}</Contents>
+                </TextContainer>
+            </PhotoContainer>
+            
+        </>
     );
 }
