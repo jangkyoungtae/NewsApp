@@ -76,7 +76,11 @@ function GoodPageContainer({ route, sort, changeSort }) {
     
     useEffect(() => {
         setLoading(true);
-        Font.loadAsync({ godob: require('../../assets/font/godob.ttf'), josun: require('../../assets/font/josun.ttf') }).then(() => {
+        Font.loadAsync({
+            godob: require('../../assets/font/godob.ttf'),
+            cookie: require('../../assets/font/cookie.otf'),
+            josun: require('../../assets/font/josun.ttf')
+        }).then(() => {
             getItemFromAsync("sort");
             getData();
             setLoading(false);
