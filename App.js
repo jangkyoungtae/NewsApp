@@ -22,6 +22,7 @@ export default function App() {
       setLoading(false);
     });
   }, []);
+  //private 에서 public 으로 변경 
   return (
     <Provider store={store}>
       <NavigationContainer>
