@@ -7,7 +7,7 @@ import { actionCreators } from '../../reducer/store';
 import { recomendApi } from '../../api/api';
 
 
-function GoodPageContainer({ route,sort, changeSort}){
+function GoodPageContainer({ route,sort, font,changeFontSize,changeSort}){
     const [loading, setLoading] = useState(true);
     const [searData, setSearData] = useState({        
         newsContents: [],
@@ -83,16 +83,18 @@ function GoodPageContainer({ route,sort, changeSort}){
         });
         
     }, []);
-    return <SportsPagePresenter route={route} sort={sort} changeSort={boardSort} {...searData} loading={loading} setLoading={setLoading}/>
+    return <SportsPagePresenter route={route} sort={sort} font={font} changeSort={boardSort} {...searData} loading={loading} setLoading={setLoading}/>
 }
-function mapStateToProps(state) {   
+function mapStateToProps(state) {
     return {
-        sort: state,
+        sort: state.sort,
+        font: state.font,
     };
 }
 function mapDispatchToProps(dispatch, ownProps) {
     return {
-        changeSort: sort => dispatch(actionCreators.changeSort(sort)),        
+        changeSort: sort => dispatch(actionCreators.changeSort(sort)),
+        changeFontSize : (font) =>dispatch(actionCreators.changeFontSize(font)),
     };
 }
 export default connect(mapStateToProps,mapDispatchToProps)(GoodPageContainer);

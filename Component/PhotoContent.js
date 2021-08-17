@@ -49,7 +49,7 @@ const DateText = styled.Text`
      margin-left:10px;  
 `
 
-export default ({ url, title, content, date }) => {
+export default ({ url, title, content, date ,font }) => {
     return (
         <>
             <PhotoContainer>
@@ -57,9 +57,24 @@ export default ({ url, title, content, date }) => {
                     <ImageBox source={{ uri: url }} />
                 </ImageContainer>                
                 <TextContainer>
-                    <DateText>{date}</DateText>
-                    <Title numberOfLines={1}>{title}</Title>
-                    <Contents numberOfLines={3}>{content}</Contents>
+                    <DateText
+                        style={{
+                            fontSize: font - 1,
+                            lineHeight: font+3
+                        }}
+                    >{date}</DateText>
+                    <Title
+                        style={{
+                            fontSize: font + 3,
+                            lineHeight: font+7
+                        }}
+                        numberOfLines={1}>{title}</Title>
+                    <Contents
+                        style={{
+                            fontSize: font - 1,
+                            lineHeight: font+3
+                        }}
+                        numberOfLines={3}>{content}</Contents>
                 </TextContainer>
             </PhotoContainer>
             

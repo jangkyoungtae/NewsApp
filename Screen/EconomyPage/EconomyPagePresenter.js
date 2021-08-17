@@ -5,7 +5,7 @@ import HeadLineContent from '../../Component/HeadLineContent';
 import PhotoContent from '../../Component/PhotoContent';
 import RecommendContent from '../../Component/RecommendContent';
 
-export default ({ loading, sort, newsContents }) => {
+export default ({ loading, sort, newsContents  ,font}) => {
     
     
     const renderItem = ({ item }) => {
@@ -13,6 +13,7 @@ export default ({ loading, sort, newsContents }) => {
            
             if(sort == 1 )
                 return <RecommendContent
+                    font={font}
                     key={item.id}
                     title={item.title}
                     content={item.content}
@@ -21,6 +22,7 @@ export default ({ loading, sort, newsContents }) => {
                 />
             else if(sort == 2 )
                 return <PhotoContent
+                    font={font}
                     key={item.id}
                     title={item.title}
                     content={item.content}
@@ -29,6 +31,7 @@ export default ({ loading, sort, newsContents }) => {
                 />
             else if(sort == 3)
                 return <HeadLineContent
+                    font={font}
                     key={item.id}
                     title={item.title}
                     content={item.content}

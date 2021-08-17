@@ -9,11 +9,9 @@ import styled from 'styled-components';
 const Title = styled.Text`
     align-self:center;
     justify-content:center;
-    font-size: 20px;
 `;
 const ContentTitle = styled.Text`
     align-self:flex-start;
-    fontSize: 17px;
     font-family: cookie;
     padding-left:20px;
     border-color: #d3d3d3;
@@ -30,21 +28,16 @@ const TitleContainer = styled.View`
     justify-content:center;
     flex-direction:row;
 `;
-function Sidebar({ sort, changeSort, props ,loading}) {
+function Sidebar({ sort, font,changeFontSize, changeSort, props ,loading}) {
     const [openSort, setOpenSort] = useState(false);
     const [openFont, setOpenFont] = useState(false);
     const [openMode, setOpenMode] = useState(false);
-    const boardSort = (sorts) => {
-      
-        if (Number(sorts) < 3) {
-            AsyncStorage.setItem("sort", "" + (Number(sorts) + 1), () => {
-               changeSort("" + (Number(sorts) + 1));            
-            });            
-        } else {
-            AsyncStorage.setItem("sort", '1', () => {
-               changeSort('1');            
-            });           
-        }
+    
+   
+    const boardSort = (sorts) => {      
+        AsyncStorage.setItem("sort", sorts, () => {
+               changeSort(sorts);            
+            });     
     }
     const onPressOpenMode = () => {
         if (openMode) {
@@ -84,7 +77,10 @@ function Sidebar({ sort, changeSort, props ,loading}) {
                             name={"cog"}
                             size={25}                            
                         />
-                    <Title>설정</Title>
+                    <Title
+                        style={{
+                        fontSize:font+7,
+                    }}>설정</Title>
                     <MaterialCommunityIcons
                         style={{
                             alignSelf:'center',
@@ -95,40 +91,48 @@ function Sidebar({ sort, changeSort, props ,loading}) {
                             size={25}                            
                         />
                 </TitleContainer>
-                <ContentTitle onPress={onPressOpenSort}>정렬</ContentTitle>
+                <ContentTitle
+                    style={{
+                        fontSize:font+4,
+                    }}
+                    onPress={onPressOpenSort}>정렬</ContentTitle>
                 {openSort && <DrawerItem
                     label="일반 정렬"
                     labelStyle={{
                         alignSelf: 'flex-end',
-                        fontSize: 13,
+                        fontSize: font,
                         fontFamily: 'cookie'
                     }}
-                    onPress={() => boardSort(sort)}
+                    onPress={() => boardSort("1")}
                 />}
                    {openSort && <DrawerItem
                     label="포토 정렬"
                     labelStyle={{
                         alignSelf: 'flex-end',
-                        fontSize: 13,
+                        fontSize: font,
                         fontFamily: 'cookie'
                     }}
-                    onPress={() => boardSort(sort)}
+                    onPress={() => boardSort("2")}
                 />}
                   {openSort && <DrawerItem
                     label="헤드라인 정렬"
                     labelStyle={{
                         alignSelf: 'flex-end',
-                        fontSize: 13,
+                        fontSize: font,
                         fontFamily: 'cookie'
                     }}
-                    onPress={() => boardSort(sort)}
+                    onPress={() => boardSort("3")}
                 />}
-                <ContentTitle onPress={onPressOpenMode}>다크모드</ContentTitle>
+                <ContentTitle
+                    style={{
+                        fontSize:font+4,
+                    }}
+                    onPress={onPressOpenMode}>다크모드</ContentTitle>
                 {openMode && <DrawerItem
                     label="일반모드"
                     labelStyle={{
                         alignSelf: 'flex-end',
-                        fontSize: 13,
+                        fontSize: font,
                         fontFamily: 'cookie'
                     }}
                     onPress={() => boardSort(sort)}
@@ -137,54 +141,68 @@ function Sidebar({ sort, changeSort, props ,loading}) {
                     label="다크모드"
                     labelStyle={{
                         alignSelf: 'flex-end',
-                        fontSize: 13,
+                        fontSize: font,
                         fontFamily: 'cookie'
                     }}
                     onPress={() => boardSort(sort)}
                 />}
-                <ContentTitle onPress={onPressOpenFont}>글자 크기 변경</ContentTitle>
+                <ContentTitle
+                    style={{
+                        fontSize:font+4,
+                    }}
+                    onPress={onPressOpenFont}>글자 크기 변경</ContentTitle>
                 {openFont && <DrawerItem
                     label="보통"
                     labelStyle={{
                         alignSelf: 'flex-end',
-                        fontSize: 13,
+                        fontSize: font,
                         fontFamily: 'cookie'
                     }}
-                    onPress={() => boardSort(sort)}
+                    onPress={() => changeFontSize(13)}
                 />}
                 {openFont && <DrawerItem
                     label="크게"
                     labelStyle={{
                         alignSelf: 'flex-end',
-                        fontSize: 13,
+                        fontSize: font,
                         fontFamily: 'cookie'
                     }}
-                    onPress={() => boardSort(sort)}
+                    onPress={() => changeFontSize(17)}
                 />}
                 {openFont && <DrawerItem
                     label="아주크게"
                     labelStyle={{
                         alignSelf: 'flex-end',
-                        fontSize: 13,
+                        fontSize: font ,
                         fontFamily: 'cookie'
                     }}
-                    onPress={() => boardSort(sort)}
+                    onPress={() => changeFontSize(20)}
                 />}
-                 <ContentTitle>내가 본 기사</ContentTitle>
-                 <ContentTitle>개인정보 처리 방침</ContentTitle>
+                <ContentTitle
+                    style={{
+                       fontSize:font+4,
+                    }}
+                >내가 본 기사</ContentTitle>
+                <ContentTitle
+                style={{
+                       fontSize:font+4,
+                    }}
+                >개인정보 처리 방침</ContentTitle>
             </DrawerContentScrollView>}
         </SafeAreaView>
 
     );
 }
-function mapStateToProps(state) {   
+function mapStateToProps(state) {
     return {
-        sort: state,
+        sort: state.sort,
+        font: state.font,
     };
 }
 function mapDispatchToProps(dispatch, ownProps) {
     return {
-        changeSort: sort => dispatch(actionCreators.changeSort(sort)),        
+        changeSort: sort => dispatch(actionCreators.changeSort(sort)),
+        changeFontSize : (font) =>dispatch(actionCreators.changeFontSize(font)),
     };
 }
 const styles = StyleSheet.create({
