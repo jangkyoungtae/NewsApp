@@ -4,7 +4,8 @@ import React from 'react';
 import Tabs from './Tabs';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Image, TouchableOpacity, View } from 'react-native';
+import {  TouchableOpacity, View } from 'react-native';
+import NewsContents from '../Screen/NewsContents';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -37,7 +38,8 @@ export default ({navigation}) => {
                 headerRight: () => <NavigationDrawerStructure navigationProps={navigation} />
             }}>
         
-            <Stack.Screen name="Tabs" component={Tabs} />       
+            <Stack.Screen name="Tabs" component={Tabs} />
+            <Stack.Screen name="NewsContents" component={NewsContents} />
         </Stack.Navigator>
     );
 }

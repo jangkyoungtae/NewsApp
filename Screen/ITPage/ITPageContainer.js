@@ -7,15 +7,18 @@ import { actionCreators } from '../../reducer/store';
 import { recomendApi } from '../../api/api';
 
 
-function GoodPageContainer({ route,sort,font,changeFontSize, changeSort}){
-    const [loading, setLoading] = useState(true);
-    const [searData, setSearData] = useState({        
+function GoodPageContainer({ route,sort,font,changeFontSize, changeSort}){   
+    const [searData, setSearData] = useState({
+        loading: true,
+        itemCount: 30,
         newsContents: [],
-        newsContentsError:[],
+        newsContentsError: [],
+        endContent: false,
     });
 
-    const getData = async() => {
-      var category = "business";
+    const getData = async () => {
+        
+        var category = "business";
         if (route.name === "IT") {
             category = 'technology';
         }else if (route.name === "문화") {
@@ -27,13 +30,30 @@ function GoodPageContainer({ route,sort,font,changeFontSize, changeSort}){
         }else if (route.name === "과학") {
             category= 'science';
         }
-         
-        const [newsContents, newsContentsError] = await recomendApi.newsSearch(category);
-       const jsondata = JSON.parse(JSON.stringify(newsContents));
-        setSearData({            
-            newsContents: jsondata,
-            newsContentsError
-        });
+       
+        const [newsContents, newsContentsError] = await recomendApi.newsSearch(category,searData.itemCount);
+        const jsondata = JSON.parse(JSON.stringify(newsContents));
+         console.log("새로고침:",jsondata.length);
+       
+        if (searData.itemCount> jsondata.length) {
+            setSearData({
+                loading: false,
+                itemCount: searData.itemCount+10,
+                newsContents: jsondata,
+                newsContentsError,
+                endContent: true,
+            });
+        } else {
+            setSearData({
+                 loading: false,
+                itemCount: searData.itemCount+10,
+                newsContents: jsondata,
+                newsContentsError,
+                endContent: false,
+            });
+        }
+       
+        
         
     }
     const isEmpty = function (value) {
@@ -54,35 +74,81 @@ function GoodPageContainer({ route,sort,font,changeFontSize, changeSort}){
           
         });
     }
+    const saveFontSize = (size) => {      
+        AsyncStorage.setItem("font", size, () => {
+               changeFontSize(size);            
+            });     
+    }
+    
     const getItemFromAsync = (storageName) => {
         if (isEmpty(storageName)) {
             throw Error('Storage Name is empty');
         }
-
+     
         return new Promise((resolve, reject) => {
             AsyncStorage.getItem(storageName, (err, result) => {
                 if (err) {
                     reject(err);
                 }
-                if (result === null || result === undefined) {                    
+                if (result === null || result === undefined) {
                     boardSort("1");
-                } else {                    
+                    resolve("1");
+                } else {
                     changeSort(result);
-                } 
+                    resolve(result);
+                    
+                }
             });
+           
         });
-    };   
+    };
+    const getItemFromAsync2 = (storageName) => {
+        if (isEmpty(storageName)) {
+            throw Error('Storage Name is empty');
+        }
+     
+        return new Promise((resolve, reject) => {
+            AsyncStorage.getItem(storageName, (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                
+                if (result === null || result === undefined) {
+                    saveFontSize(13);
+                    resolve(13);
+                } else {
+                    changeFontSize(Number(result));
+                    resolve(""+result);
+                    
+                }
+            });
+           
+        });
+    };
+      
+    const handleLoadMore = () => {
+        if (!searData.endContent) {
+            getData();
+        }
+        
+    };
     
     useEffect(() => {
-        setLoading(true);
+       
         Font.loadAsync({ godob: require('../../assets/font/godob.ttf'), josun: require('../../assets/font/josun.ttf') }).then(() => {
-            getItemFromAsync("sort");
+            Promise.all([getItemFromAsync("sort"),getItemFromAsync2("font")]).then((result) => {
+                console.log("폰트 결과 : ",result);
+            }).catch((err) => {
+                console.log("에러: ", err);
+                
+            });
+            
             getData();
-            setLoading(false);
+           
         });
         
     }, []);
-    return <ITPagePresenter route={route} sort={sort} font={font} changeSort={boardSort} {...searData} loading={loading} setLoading={setLoading}/>
+    return <ITPagePresenter route={route} sort={sort} font={font} changeSort={boardSort} {...searData} handleLoadMore={handleLoadMore}  />
 }
 function mapStateToProps(state) {   
     return {

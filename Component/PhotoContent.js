@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -49,9 +50,17 @@ const DateText = styled.Text`
      margin-left:10px;  
 `
 
-export default ({ url, title, content, date ,font }) => {
+export default ({ url, title, content, date, font }) => {
+    const navigation = useNavigation();
+      const goContents = () => {
+        navigation.navigate("NewsContents", {
+            params: {
+                url:linkUrl
+            }
+        });
+    }
     return (
-        <>
+        <TouchableOpacity onPress={goContents}>
             <PhotoContainer>
                 <ImageContainer>
                     <ImageBox source={{ uri: url }} />
@@ -78,6 +87,6 @@ export default ({ url, title, content, date ,font }) => {
                 </TextContainer>
             </PhotoContainer>
             
-        </>
+        </TouchableOpacity>
     );
 }

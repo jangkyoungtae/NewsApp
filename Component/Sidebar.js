@@ -39,6 +39,11 @@ function Sidebar({ sort, font,changeFontSize, changeSort, props ,loading}) {
                changeSort(sorts);            
             });     
     }
+     const saveFontSize = (size) => {      
+        AsyncStorage.setItem("font", ""+size, () => {
+               changeFontSize(size);            
+            });     
+    }
     const onPressOpenMode = () => {
         if (openMode) {
             setOpenMode(false);
@@ -158,7 +163,7 @@ function Sidebar({ sort, font,changeFontSize, changeSort, props ,loading}) {
                         fontSize: font,
                         fontFamily: 'cookie'
                     }}
-                    onPress={() => changeFontSize(13)}
+                    onPress={() => saveFontSize(13)}
                 />}
                 {openFont && <DrawerItem
                     label="크게"
@@ -167,7 +172,7 @@ function Sidebar({ sort, font,changeFontSize, changeSort, props ,loading}) {
                         fontSize: font,
                         fontFamily: 'cookie'
                     }}
-                    onPress={() => changeFontSize(17)}
+                    onPress={() => saveFontSize(17)}
                 />}
                 {openFont && <DrawerItem
                     label="아주크게"
@@ -176,7 +181,7 @@ function Sidebar({ sort, font,changeFontSize, changeSort, props ,loading}) {
                         fontSize: font ,
                         fontFamily: 'cookie'
                     }}
-                    onPress={() => changeFontSize(20)}
+                    onPress={() => saveFontSize(20)}
                 />}
                 <ContentTitle
                     style={{

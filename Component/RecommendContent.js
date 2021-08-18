@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import moment from 'moment';
-import unescape from 'unescape';
+import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 const RecommendContainer = styled.View`
     flex-direction:row;
     flex:1;
@@ -51,7 +51,8 @@ const DateText = styled.Text`
     line-height:14px;
      margin-left:10px;  
 `
-export default ({ imageUrl, title, content, date ,font}) => {  
+export default ({ imageUrl, title, content, date, font,link }) => {
+    const navigation = useNavigation();
     
     const isEmpty = function (value) {
         if (
@@ -65,12 +66,21 @@ export default ({ imageUrl, title, content, date ,font}) => {
             return false;
         }
     };
+    const goContents = () => {
+        navigation.navigate("NewsContents", {
+            url:link
+        });
+    }
     return (
     <>
-            {!isEmpty(imageUrl) && <RecommendContainer>
-            
+            {!isEmpty(imageUrl) &&
+                <TouchableOpacity onPress={goContents}>
+                <RecommendContainer>
+                    
                 <ImageContainer>
-                    <ImageBox source={{ uri: imageUrl }} />
+                    
+                        <ImageBox source={{ uri: imageUrl }} />
+                        
                 </ImageContainer>
                 <TextContainer>
                     <DateText
@@ -94,8 +104,10 @@ export default ({ imageUrl, title, content, date ,font}) => {
                         numberOfLines={3}
                     >{content}</Contents>
                 </TextContainer>
-
-            </RecommendContainer>}
+              
+                </RecommendContainer>
+                </TouchableOpacity>
+           }
      </>
     );
 }

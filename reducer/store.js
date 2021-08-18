@@ -14,8 +14,7 @@ const changeFontSize = (font) => {
         font
     }
 }
-const reducer = (state = { 'sort': '1', 'font': 13 }, action) => {
-    console.log(action.type);
+const reducer = (state = { 'sort': '1', 'font': 13 }, action) => {   
     if (action.type === "SORT") {
         return {'sort':action.sort,'font':state.font};
     } else if (action.type === "FONT") {
