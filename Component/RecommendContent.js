@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
+import { checkAdd } from '../sqldata';
+import moment from 'moment';
 const RecommendContainer = styled.View`
     flex-direction:row;
     flex:1;
     width:100%;
-    background-color:white;
     padding:5px;
 `
 const ImageContainer = styled.View`
@@ -51,7 +52,7 @@ const DateText = styled.Text`
     line-height:14px;
      margin-left:10px;  
 `
-export default ({ imageUrl, title, content, date, font,link }) => {
+export default ({ id,imageUrl, title, content, date, font,link ,isHistory,mode}) => {
     const navigation = useNavigation();
     
     const isEmpty = function (value) {
@@ -67,39 +68,67 @@ export default ({ imageUrl, title, content, date, font,link }) => {
         }
     };
     const goContents = () => {
-        navigation.navigate("NewsContents", {
-            url:link
-        });
+        if (isHistory==="true") {
+            navigation.navigate("NewsContents");    
+            navigation.dispatch(
+                CommonActions.reset({
+                    index: 0,
+                    routes: [
+                        {
+                            name: 'NewsContents',
+                            url: link,
+                            history:isHistory
+                        },
+                    ],
+                })
+            );
+        } else {
+            console.log("읽은 날짜 : ", moment(new Date()).format("YYYY-MM-DD HH:mm:ss"));
+            checkAdd(id, title, content, imageUrl, link, date, moment(new Date()).format("YYYY-MM-DD HH:mm:ss"));      
+            navigation.navigate("NewsContents", {
+                url:link
+            });
+        }
+        
     }
     return (
     <>
             {!isEmpty(imageUrl) &&
                 <TouchableOpacity onPress={goContents}>
-                <RecommendContainer>
-                    
+                <RecommendContainer style={{
+                    backgroundColor:  mode  == 'false'  ? "white": "black",
+                }}>                    
                 <ImageContainer>
                     
                         <ImageBox source={{ uri: imageUrl }} />
                         
                 </ImageContainer>
-                <TextContainer>
+                    <TextContainer
+                    style={{
+                        backgroundColor:  mode  == 'false'  ? "#f6f6f6": "#5e5e5e",
+                    }}>
                     <DateText
                         style={{
                             fontSize: font - 1,
-                            lineHeight: font+3
+                                lineHeight: font + 3,
+                            color:mode  == 'false'  ? "black": "white",
+                            
                         }}
                     >{date}</DateText>
                     <Title                        
                         style={{
                             fontSize: font + 3,
-                            lineHeight: font+7
+                            lineHeight: font + 7,
+                            color:mode  == 'false'  ? "black": "white",
+                            
                             
                         }}
                         numberOfLines={1}>{title}</Title>
                     <Contents
                         style={{
                             fontSize: font - 1,
-                            lineHeight: font+3
+                                lineHeight: font + 3,
+                            color:mode  == 'false'  ? "black": "white",
                         }}
                         numberOfLines={3}
                     >{content}</Contents>

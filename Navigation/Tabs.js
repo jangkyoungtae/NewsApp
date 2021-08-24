@@ -6,6 +6,7 @@ import CulturePage from '../Screen/CulturePage';
 import EnterPage from '../Screen/EnterPage';
 import SportsPage from '../Screen/SportsPage';
 import EconomyPage from '../Screen/EconomyPage';
+import { BackHandler } from 'react-native';
 
 
 
@@ -14,17 +15,24 @@ import EconomyPage from '../Screen/EconomyPage';
 
 const Tab = createMaterialTopTabNavigator();
 
-export default ({ navigation, route }) =>{
+export default ({ navigation, route }) => {
+    
+    const handleBackPress = () => {
+        BackHandler.exitApp();
+        return true;              
+       
+    }
     useLayoutEffect(() => {
-        navigation.setOptions({ title: '뉴스플레이' });
+         BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+        navigation.setOptions({ title: '뉴스기사' });
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+        }
     }, [route]);
  
     
     return (
         <Tab.Navigator
-            screenOptions={({ route }) => ({
-                
-            })}
             tabBarOptions={{
                 allowFontScaling: true,
                 scrollEnabled:true,

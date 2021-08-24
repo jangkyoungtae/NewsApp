@@ -1,83 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import * as Font from 'expo-font';
-import GoodPagePresenter from './GoodPagePresenter';
+import HistoryPresenter from './HistoryPresenter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
 import { actionCreators } from '../../reducer/store';
-import { recomendApi } from '../../api/api';
+import * as SQLite from 'expo-sqlite';    
+import { StatusBar } from 'react-native';
+import {
+    BackHandler
+} from 'react-native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 
 
-function GoodPageContainer({  route,sort,font,mode,changeFontSize, changeSort,changeMode}){   
+const db = SQLite.openDatabase("history.db", 1);
+
+
+
+function HistoryContainer({ route, sort, font, mode, changeFontSize, changeSort, changeMode }) {
+    const navigation = useNavigation();
+    
     const [searData, setSearData] = useState({
         loading: true,
-        itemCount: 30,
         newsContents: [],
-        newsContentsError: [],
-        endContent: false,
     });
-
-    const getData = async (refresh) => {
+    
+    const getData = async () => {
+            await db.transaction(            
+            tx => {                
+                tx.executeSql("select * from history order by nowDate desc", [], (_, { rows }) => {
+                    setSearData({
+                        loading: false,
+                        newsContents: rows           
+                    })
+                });
+            },
+            (err) => {
+                    console.log("sql 없음 :" ,err)
+            },
+        );
         
-        var category = "business";
-        if (route.name === "IT") {
-            category = 'technology';
-        }else if (route.name === "문화") {
-            category = 'general';
-        }else if (route.name === "연예") {
-            category = 'entertainment';
-        }else if (route.name === "스포츠") {
-            category = 'sports';
-        }else if (route.name === "과학") {
-            category= 'science';
-        }
-        if (!refresh) {
-            setSearData({
-                loading: true,
-                itemCount: 30,
-                newsContents: [],
-                newsContentsError:[],
-                endContent: false,
-            });
-        }
-        const [newsContents, newsContentsError] = await recomendApi.newsSearch(category,searData.itemCount);
-        const jsondata = JSON.parse(JSON.stringify(newsContents));
-        if (refresh) {
-             if (searData.itemCount> jsondata.length) {
-                setSearData({
-                    loading: false,
-                    itemCount: searData.itemCount+10,
-                    newsContents: jsondata,
-                    newsContentsError,
-                    endContent: true,
-                });
-            } else {
-                setSearData({
-                    loading: false,
-                    itemCount: searData.itemCount+10,
-                    newsContents: jsondata,
-                    newsContentsError,
-                    endContent: false,
-                });
-            }
-        } else {
-             if (searData.itemCount == 30) {
-                setSearData({
-                    loading: false,
-                    itemCount: searData.itemCount+10,
-                    newsContents: jsondata,
-                    newsContentsError,
-                    endContent: false,
-                });
-            } else {
-                setSearData({
-                    loading: false,
-                    itemCount: 30,
-                    newsContents: jsondata,
-                    newsContentsError,
-                    endContent: false,
-                });
-            }
-        }
+        
     }
     const isEmpty = function (value) {
         if (
@@ -174,31 +136,55 @@ function GoodPageContainer({  route,sort,font,mode,changeFontSize, changeSort,ch
            
         });
     };
-      
-    const handleLoadMore = () => {
-        if (!searData.endContent) {
-            getData(true);
-        }
+    const handleBackPress = () => {
+        console.log("라우트이름",route);
+            
+            navigation.navigate("Tabs");
+            navigation.dispatch(
+                    CommonActions.reset({
+                        index: 0,
+                        routes: [
+                            {
+                                name: 'Tabs',
+                            },
+                        ],
+                    })
+            );
+             return true;      
         
-    };
+       
+    }
+    
     
     useEffect(() => {
-        Promise.all([getItemFromAsync("sort"),getItemFromAsync2("font"),getItemFromAsync3('mode')]).catch((err) => {
-                console.log("에러: ", err);                
-            });            
-            getData(false);
+        BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+        Promise.all([getItemFromAsync("sort"),getItemFromAsync2("font"),getItemFromAsync3('mode')]).then((result) => {
+            console.log("result: ", result);
+        }).catch((err) => {
+            console.log("에러: ", err);
+            
+        });
         
+        getData();
+         console.log('컴포넌트가 화면에 나타남');
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+            console.log('컴포넌트가 화면에서 사라짐');
+        };
     }, []);
-    return <GoodPagePresenter 
-        route={route}
-        sort={sort}
-        mode={mode}
-        font={font}
-        changeSort={boardSort}
-        {...searData}
-        handleLoadMore={handleLoadMore}
-        getData={getData}
-    />
+    return (
+        <>
+            <StatusBar />
+            <HistoryPresenter
+                route={route}
+                sort={sort}
+                mode={mode}
+                font={font}
+                {...searData}
+                navigation={navigation}
+            />
+        </>
+    )
 }
 function mapStateToProps(state) {
     return {
@@ -211,7 +197,8 @@ function mapDispatchToProps(dispatch, ownProps) {
     return {
         changeSort: sort => dispatch(actionCreators.changeSort(sort)),
         changeFontSize: (font) => dispatch(actionCreators.changeFontSize(font)),
-        changeMode : (mode) =>dispatch(actionCreators.changeMode(mode)),
+        changeMode: (mode) => dispatch(actionCreators.changeMode(mode)),
+     
     };
 }
-export default connect(mapStateToProps,mapDispatchToProps)(GoodPageContainer);
+export default connect(mapStateToProps,mapDispatchToProps)(HistoryContainer);

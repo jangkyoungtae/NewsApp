@@ -1,6 +1,9 @@
-import { useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 import React from 'react';
+import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
+import { checkAdd } from '../sqldata';
+import moment from 'moment';
 
 const PhotoContainer = styled.View`    
     flex:1;
@@ -50,14 +53,32 @@ const DateText = styled.Text`
      margin-left:10px;  
 `
 
-export default ({ url, title, content, date, font }) => {
+export default ({ id, url, title, content, date, font, link,isHistory }) => {
+   
     const navigation = useNavigation();
-      const goContents = () => {
-        navigation.navigate("NewsContents", {
-            params: {
-                url:linkUrl
-            }
-        });
+    const goContents = () => {
+        if (isHistory==="true") {
+            navigation.navigate("NewsContents");    
+            navigation.dispatch(
+                CommonActions.reset({
+                    index: 0,
+                    routes: [
+                        {
+                            name: 'NewsContents',
+                            url: link,
+                            history:isHistory
+                        },
+                    ],
+                })
+            );
+        } else {
+            console.log("읽은 날짜 : ", moment(new Date()).format("YYYY-MM-DD HH:mm:ss"));
+            checkAdd(id, title, content, url, link, date, moment(new Date()).format("YYYY-MM-DD HH:mm:ss"));      
+            navigation.navigate("NewsContents", {
+                url:link
+            });
+        }
+        
     }
     return (
         <TouchableOpacity onPress={goContents}>

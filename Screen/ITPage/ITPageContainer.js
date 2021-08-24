@@ -7,7 +7,7 @@ import { actionCreators } from '../../reducer/store';
 import { recomendApi } from '../../api/api';
 
 
-function GoodPageContainer({ route,sort,font,changeFontSize, changeSort}){   
+function GoodPageContainer({  route,sort,font,mode,changeFontSize, changeSort,changeMode}){   
     const [searData, setSearData] = useState({
         loading: true,
         itemCount: 30,
@@ -16,7 +16,7 @@ function GoodPageContainer({ route,sort,font,changeFontSize, changeSort}){
         endContent: false,
     });
 
-    const getData = async () => {
+    const getData = async (refresh) => {
         
         var category = "business";
         if (route.name === "IT") {
@@ -30,31 +30,54 @@ function GoodPageContainer({ route,sort,font,changeFontSize, changeSort}){
         }else if (route.name === "과학") {
             category= 'science';
         }
-       
-        const [newsContents, newsContentsError] = await recomendApi.newsSearch(category,searData.itemCount);
-        const jsondata = JSON.parse(JSON.stringify(newsContents));
-         console.log("새로고침:",jsondata.length);
-       
-        if (searData.itemCount> jsondata.length) {
+        if (!refresh) {
             setSearData({
-                loading: false,
-                itemCount: searData.itemCount+10,
-                newsContents: jsondata,
-                newsContentsError,
-                endContent: true,
-            });
-        } else {
-            setSearData({
-                 loading: false,
-                itemCount: searData.itemCount+10,
-                newsContents: jsondata,
-                newsContentsError,
+                loading: true,
+                itemCount: 30,
+                newsContents: [],
+                newsContentsError:[],
                 endContent: false,
             });
         }
-       
-        
-        
+        const [newsContents, newsContentsError] = await recomendApi.newsSearch(category,searData.itemCount);
+        const jsondata = JSON.parse(JSON.stringify(newsContents));
+        if (refresh) {
+             if (searData.itemCount> jsondata.length) {
+                setSearData({
+                    loading: false,
+                    itemCount: searData.itemCount+10,
+                    newsContents: jsondata,
+                    newsContentsError,
+                    endContent: true,
+                });
+            } else {
+                setSearData({
+                    loading: false,
+                    itemCount: searData.itemCount+10,
+                    newsContents: jsondata,
+                    newsContentsError,
+                    endContent: false,
+                });
+            }
+        } else {
+             if (searData.itemCount == 30) {
+                setSearData({
+                    loading: false,
+                    itemCount: searData.itemCount+10,
+                    newsContents: jsondata,
+                    newsContentsError,
+                    endContent: false,
+                });
+            } else {
+                setSearData({
+                    loading: false,
+                    itemCount: 30,
+                    newsContents: jsondata,
+                    newsContentsError,
+                    endContent: false,
+                });
+            }
+        }
     }
     const isEmpty = function (value) {
         if (
@@ -79,7 +102,33 @@ function GoodPageContainer({ route,sort,font,changeFontSize, changeSort}){
                changeFontSize(size);            
             });     
     }
-    
+    const setMode = (mode) => {      
+        AsyncStorage.setItem("mode", mode, () => {
+               changeMode(mode);            
+            });     
+    }
+    const getItemFromAsync3 = (storageName) => {
+        if (isEmpty(storageName)) {
+            throw Error('Storage Name is empty');
+        }
+     
+        return new Promise((resolve, reject) => {
+            AsyncStorage.getItem(storageName, (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                if (result === null || result === undefined) {
+                    setMode('false');
+                    resolve('false');
+                } else {
+                    changeMode(result);
+                    resolve(result);
+                    
+                }
+            });
+           
+        });
+    };
     const getItemFromAsync = (storageName) => {
         if (isEmpty(storageName)) {
             throw Error('Storage Name is empty');
@@ -114,8 +163,8 @@ function GoodPageContainer({ route,sort,font,changeFontSize, changeSort}){
                 }
                 
                 if (result === null || result === undefined) {
-                    saveFontSize(13);
-                    resolve(13);
+                    saveFontSize("13");
+                    resolve("13");
                 } else {
                     changeFontSize(Number(result));
                     resolve(""+result);
@@ -128,38 +177,42 @@ function GoodPageContainer({ route,sort,font,changeFontSize, changeSort}){
       
     const handleLoadMore = () => {
         if (!searData.endContent) {
-            getData();
+            getData(true);
         }
         
     };
     
     useEffect(() => {
        
-        Font.loadAsync({ godob: require('../../assets/font/godob.ttf'), josun: require('../../assets/font/josun.ttf') }).then(() => {
-            Promise.all([getItemFromAsync("sort"),getItemFromAsync2("font")]).then((result) => {
-                console.log("폰트 결과 : ",result);
-            }).catch((err) => {
-                console.log("에러: ", err);
-                
-            });
-            
-            getData();
-           
-        });
+        Promise.all([getItemFromAsync("sort"), getItemFromAsync2("font"), getItemFromAsync3('mode')]).catch((err) => {
+            console.log("에러: ", err);
+        });            
+        getData(false);
         
     }, []);
-    return <ITPagePresenter route={route} sort={sort} font={font} changeSort={boardSort} {...searData} handleLoadMore={handleLoadMore}  />
+    return <ITPagePresenter 
+        route={route}
+        sort={sort}
+        mode={mode}
+        font={font}
+        changeSort={boardSort}
+        {...searData}
+        handleLoadMore={handleLoadMore}
+        getData={getData}
+    />
 }
-function mapStateToProps(state) {   
+function mapStateToProps(state) {
     return {
         sort: state.sort,
         font: state.font,
+        mode: state.mode,
     };
 }
 function mapDispatchToProps(dispatch, ownProps) {
     return {
         changeSort: sort => dispatch(actionCreators.changeSort(sort)),
-        changeFontSize : (font) =>dispatch(actionCreators.changeFontSize(font)),
+        changeFontSize: (font) => dispatch(actionCreators.changeFontSize(font)),
+        changeMode : (mode) =>dispatch(actionCreators.changeMode(mode)),
     };
 }
 export default connect(mapStateToProps,mapDispatchToProps)(GoodPageContainer);

@@ -1,19 +1,20 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import React, { useState } from 'react';
-import { SafeAreaView ,StyleSheet} from 'react-native';
+import { DrawerContentScrollView,DrawerItemList , DrawerItem } from '@react-navigation/drawer';
+import React, {  useEffect, useState } from 'react';
+import { SafeAreaView ,StyleSheet,Linking} from 'react-native';
 import { connect } from 'react-redux';
 import { actionCreators } from '../reducer/store';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import styled from 'styled-components';
+
 const Title = styled.Text`
     align-self:center;
     justify-content:center;
 `;
 const ContentTitle = styled.Text`
     align-self:flex-start;
-    font-family: cookie;
     padding-left:20px;
+    font-family:godob;
     border-color: #d3d3d3;
     border-bottom-width: 1px;
     border-style: solid;
@@ -28,12 +29,19 @@ const TitleContainer = styled.View`
     justify-content:center;
     flex-direction:row;
 `;
-function Sidebar({ sort, font,changeFontSize, changeSort, props ,loading}) {
-    const [openSort, setOpenSort] = useState(false);
-    const [openFont, setOpenFont] = useState(false);
-    const [openMode, setOpenMode] = useState(false);
-    
-   
+
+function Sidebar({props,mode ,font,changeFontSize, changeSort,changeMode}) {
+    const [openSort, setOpenSort] = useState(true);
+    const [openFont, setOpenFont] = useState(true);
+    const [openMode, setOpenMode] = useState(true);
+  
+     const setMode = (modes) => {      
+         AsyncStorage.setItem("mode", modes, () => {
+                console.log("mode 결과 : ",modes);
+                changeMode(modes);            
+            });     
+    }
+  
     const boardSort = (sorts) => {      
         AsyncStorage.setItem("sort", sorts, () => {
                changeSort(sorts);            
@@ -67,10 +75,22 @@ function Sidebar({ sort, font,changeFontSize, changeSort, props ,loading}) {
          }
         
     }
+    const goSecurity = async () => {
+        await Linking.openURL("http://js-media.kr/securitynews.html");
+    }
+
+    
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView
+            style={{
+                flex: 1,
+                backgroundColor:mode ==="false" ? "white": "black",
+            }}
+        >
             
-            {!loading && <DrawerContentScrollView {...props}>
+            
+            <DrawerContentScrollView {...props}>
+                
                 <TitleContainer>
                     <MaterialCommunityIcons
                         style={{
@@ -80,11 +100,13 @@ function Sidebar({ sort, font,changeFontSize, changeSort, props ,loading}) {
                            
                         }}
                             name={"cog"}
-                            size={25}                            
+                        size={25}
+                        color={mode ==="false" ? "black": "white"}
                         />
                     <Title
                         style={{
-                        fontSize:font+7,
+                            fontSize: font + 7,
+                            color:mode ==="false" ? "black": "white",
                     }}>설정</Title>
                     <MaterialCommunityIcons
                         style={{
@@ -93,12 +115,14 @@ function Sidebar({ sort, font,changeFontSize, changeSort, props ,loading}) {
                             marginLeft:5
                         }}
                             name={"cog"}
-                            size={25}                            
+                        size={25}
+                        color={mode ==="false" ? "black": "white"}
                         />
                 </TitleContainer>
                 <ContentTitle
                     style={{
-                        fontSize:font+4,
+                        fontSize: font + 4,
+                        color:mode ==="false" ? "black": "white",
                     }}
                     onPress={onPressOpenSort}>정렬</ContentTitle>
                 {openSort && <DrawerItem
@@ -106,7 +130,8 @@ function Sidebar({ sort, font,changeFontSize, changeSort, props ,loading}) {
                     labelStyle={{
                         alignSelf: 'flex-end',
                         fontSize: font,
-                        fontFamily: 'cookie'
+                        fontFamily: 'godob',
+                        color:mode ==="false" ? "black": "white",
                     }}
                     onPress={() => boardSort("1")}
                 />}
@@ -115,7 +140,9 @@ function Sidebar({ sort, font,changeFontSize, changeSort, props ,loading}) {
                     labelStyle={{
                         alignSelf: 'flex-end',
                         fontSize: font,
-                        fontFamily: 'cookie'
+                        fontFamily: 'godob',
+                        color:mode ==="false" ? "black": "white",
+
                     }}
                     onPress={() => boardSort("2")}
                 />}
@@ -124,13 +151,15 @@ function Sidebar({ sort, font,changeFontSize, changeSort, props ,loading}) {
                     labelStyle={{
                         alignSelf: 'flex-end',
                         fontSize: font,
-                        fontFamily: 'cookie'
+                        fontFamily: 'godob',
+                        color:mode ==="false" ? "black": "white",
                     }}
                     onPress={() => boardSort("3")}
                 />}
                 <ContentTitle
                     style={{
-                        fontSize:font+4,
+                        fontSize: font + 4,
+                        color:mode ==="false" ? "black": "white",
                     }}
                     onPress={onPressOpenMode}>다크모드</ContentTitle>
                 {openMode && <DrawerItem
@@ -138,22 +167,25 @@ function Sidebar({ sort, font,changeFontSize, changeSort, props ,loading}) {
                     labelStyle={{
                         alignSelf: 'flex-end',
                         fontSize: font,
-                        fontFamily: 'cookie'
+                        fontFamily: 'godob',
+                        color:mode ==="false" ? "black": "white",
                     }}
-                    onPress={() => boardSort(sort)}
+                    onPress={() => setMode("false")}
                 />}
                 {openMode && <DrawerItem
                     label="다크모드"
                     labelStyle={{
                         alignSelf: 'flex-end',
                         fontSize: font,
-                        fontFamily: 'cookie'
+                        fontFamily: 'godob',
+                        color:mode ==="false" ? "black": "white",
                     }}
-                    onPress={() => boardSort(sort)}
+                    onPress={() => setMode("true")}
                 />}
                 <ContentTitle
                     style={{
-                        fontSize:font+4,
+                        fontSize: font + 4,
+                        color:mode ==="false" ? "black": "white",
                     }}
                     onPress={onPressOpenFont}>글자 크기 변경</ContentTitle>
                 {openFont && <DrawerItem
@@ -161,7 +193,8 @@ function Sidebar({ sort, font,changeFontSize, changeSort, props ,loading}) {
                     labelStyle={{
                         alignSelf: 'flex-end',
                         fontSize: font,
-                        fontFamily: 'cookie'
+                        fontFamily: 'godob',
+                        color:mode ==="false" ? "black": "white",
                     }}
                     onPress={() => saveFontSize(13)}
                 />}
@@ -170,7 +203,8 @@ function Sidebar({ sort, font,changeFontSize, changeSort, props ,loading}) {
                     labelStyle={{
                         alignSelf: 'flex-end',
                         fontSize: font,
-                        fontFamily: 'cookie'
+                        fontFamily: 'godob',
+                        color:mode ==="false" ? "black": "white",
                     }}
                     onPress={() => saveFontSize(17)}
                 />}
@@ -179,21 +213,36 @@ function Sidebar({ sort, font,changeFontSize, changeSort, props ,loading}) {
                     labelStyle={{
                         alignSelf: 'flex-end',
                         fontSize: font ,
-                        fontFamily: 'cookie'
+                        fontFamily: 'godob',
+                        color:mode ==="false" ? "black": "white",
                     }}
                     onPress={() => saveFontSize(20)}
                 />}
+               
+               
                 <ContentTitle
-                    style={{
-                       fontSize:font+4,
-                    }}
-                >내가 본 기사</ContentTitle>
-                <ContentTitle
+                    onPress={goSecurity}
                 style={{
-                       fontSize:font+4,
+                    fontSize: font + 4,
+                    color:mode ==="false" ? "black": "white",
                     }}
                 >개인정보 처리 방침</ContentTitle>
-            </DrawerContentScrollView>}
+                <DrawerItemList
+                    activeBackgroundColor={"gray"}
+                    activeTintColor={"white"}
+                    inactiveTintColor={"black"}
+                    labelStyle={{                         
+                        alignSelf: 'flex-start',
+                        paddingLeft: 20,
+                        fontSize: font +4,
+                        fontFamily: 'godob',
+                        color:mode ==="false" ? "black": "white",
+                    }}
+                    
+                    {...props}
+                />
+                    
+            </DrawerContentScrollView>
         </SafeAreaView>
 
     );
@@ -202,12 +251,14 @@ function mapStateToProps(state) {
     return {
         sort: state.sort,
         font: state.font,
+        mode: state.mode,
     };
 }
 function mapDispatchToProps(dispatch, ownProps) {
     return {
         changeSort: sort => dispatch(actionCreators.changeSort(sort)),
-        changeFontSize : (font) =>dispatch(actionCreators.changeFontSize(font)),
+        changeFontSize: (font) => dispatch(actionCreators.changeFontSize(font)),
+        changeMode : (mode) =>dispatch(actionCreators.changeMode(mode)),
     };
 }
 const styles = StyleSheet.create({

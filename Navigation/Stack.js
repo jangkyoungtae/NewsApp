@@ -3,14 +3,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import Tabs from './Tabs';
 import { SimpleLineIcons } from '@expo/vector-icons';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import {  TouchableOpacity, View } from 'react-native';
+import {  BackHandler, TouchableOpacity, View } from 'react-native';
 import NewsContents from '../Screen/NewsContents';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
-const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
-export default ({navigation}) => {
+export default ({ route, navigation }) => {
+    
+  
     const NavigationDrawerStructure = (props) => {
   //Structure for the navigatin Drawer
         const toggleDrawer = () => {          
@@ -27,6 +28,7 @@ export default ({navigation}) => {
             </View>
         );
     };
+  
     return (
         <Stack.Navigator
             screenOptions={{
@@ -35,11 +37,12 @@ export default ({navigation}) => {
                 },
                 headerTintColor: '#000000',           
                 headerShown: true,
-                headerRight: () => <NavigationDrawerStructure navigationProps={navigation} />
+                headerRight: () => getFocusedRouteNameFromRoute(route) !== "NewsContents" && <NavigationDrawerStructure navigationProps={navigation} />
             }}>
         
             <Stack.Screen name="Tabs" component={Tabs} />
             <Stack.Screen name="NewsContents" component={NewsContents} />
+            
         </Stack.Navigator>
     );
 }

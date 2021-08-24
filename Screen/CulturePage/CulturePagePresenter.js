@@ -1,27 +1,47 @@
 
 import React, { useState } from 'react';
-import { ActivityIndicator,   FlatList, View } from 'react-native';
+import { ActivityIndicator,   FlatList, RefreshControl, View } from 'react-native';
 import HeadLineContent from '../../Component/HeadLineContent';
 import PhotoContent from '../../Component/PhotoContent';
 import RecommendContent from '../../Component/RecommendContent';
 
-export default ({ loading, sort, newsContents ,handleLoadMore,font }) => {
-    
+export default ({ loading, sort, mode,newsContents ,handleLoadMore,font,endContent ,getData}) => {
+    const [refreshing, setRefreshing] = useState(false);
     const [loadMore, setLoadMore] = useState(false);
     const isLoadMore = () => {
+        if (!endContent) {
+            setLoadMore(true);
+            setTimeout(()=>{ 
+                handleLoadMore();
+                setLoadMore(false);
+            }, 1000);
+        }
         
-        setLoadMore(true);
-        setTimeout(()=>{
-            handleLoadMore();
-            setLoadMore(false);
-        }, 1000);
+    }
+    const onRefresh = () => {
+        if (!endContent) {
+             setRefreshing(true);
+            new Promise((resolve, reject) => {
+                getData(false);
+                resolve(true);
+            }).then((result) => {
+                console.log(result);
+                if (result) {
+                    setRefreshing(false);
+                }
+            });
+        }
+        
+        
     }
     const renderItem = ({ item }) => {
         if (item.ImageUrl !== "" && item.ImageUrl !==undefined) {            
-            
+            console.log(mode);
             if(sort == 1 )
                 return <RecommendContent
                     font={font}
+                    mode={mode}
+                    id={item.id}
                     key={item.id}
                     title={item.title}
                     content={item.content}
@@ -32,7 +52,9 @@ export default ({ loading, sort, newsContents ,handleLoadMore,font }) => {
             else if(sort == 2 )
                 return <PhotoContent
                     font={font}
+                    mode={mode}
                     key={item.id}
+                    id={item.id}
                     title={item.title}
                     content={item.content}
                     url={item.ImageUrl}
@@ -42,30 +64,37 @@ export default ({ loading, sort, newsContents ,handleLoadMore,font }) => {
             else if(sort == 3)
                 return <HeadLineContent
                     font={font}
+                    mode={mode}
                     key={item.id}
+                    id={item.id}
                     title={item.title}
                     content={item.content}
                     url={item.ImageUrl}
-                    linkUrl={item.linkUrl}
+                    link={item.linkUrl}
                     date={item.date}
                 />
         }
     }
     return (
     <>
-            {!loading ? <View
-                style={{
-                    flex:1,
-                flexDirection:"column"
-            }}>
-                
+            {!loading ?
+                <View
+                    style={{
+                        flex:1,
+                        flexDirection: "column",
+                        backgroundColor:mode ==="true" ? "white": "black",
+                        
+                    }}
+                >
+                            
                 <FlatList
                     data={newsContents}
                     renderItem={renderItem}
                     keyExtractor={item =>  Math.round(Number(item.id)*Math.random() * 13123561
                         ).toString()}
-                    onEndReached={isLoadMore}
-                    onEndReachedThreshold={0.5}
+                    onEndReached={!endContent && isLoadMore}
+                    onEndReachedThreshold={0.1}
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                 />
                 {loadMore && <ActivityIndicator color="black" size="large" />}
             </View> : <ActivityIndicator size={'large'} color={'black'} />}

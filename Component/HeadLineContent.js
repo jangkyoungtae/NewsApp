@@ -1,7 +1,10 @@
 import React from 'react';
-import { Text } from 'react-native';
+import {  TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
-import moment from 'moment'; 
+import { CommonActions, useNavigation } from '@react-navigation/native';
+import { checkAdd } from '../sqldata';
+import moment from 'moment';
+
 const HeadLineContainer = styled.View`    
     flex:1;
     width:100%;
@@ -37,9 +40,34 @@ const DateText = styled.Text`
     line-height:14px;
      margin-left:10px;  
 `
-export default ({ title, content, date ,font}) => {
+export default ({ id,url, title, content, date, font, link,isHistory}) => {
+    const navigation = useNavigation();
+     const goContents = () => {
+        if (isHistory==="true") {
+            navigation.navigate("NewsContents");    
+            navigation.dispatch(
+                CommonActions.reset({
+                    index: 0,
+                    routes: [
+                        {
+                            name: 'NewsContents',
+                            url: link,
+                            history:isHistory
+                        },
+                    ],
+                })
+            );
+        } else {
+            console.log("읽은 날짜 : ", moment(new Date()).format("YYYY-MM-DD HH:mm:ss"));
+            checkAdd(id, title, content, url, link, date, moment(new Date()).format("YYYY-MM-DD HH:mm:ss"));      
+            navigation.navigate("NewsContents", {
+                url:link
+            });
+        }
+        
+    }
     return (
-    <>
+     <TouchableOpacity onPress={goContents}>
         <HeadLineContainer>            
             <TextContainer>
                     <DateText
@@ -66,6 +94,6 @@ export default ({ title, content, date ,font}) => {
             </TextContainer>
         </HeadLineContainer>
         
-    </>
+    </TouchableOpacity>
     );
 }
