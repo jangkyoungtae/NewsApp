@@ -1,0 +1,105 @@
+{
+  "project_info": {
+    "project_number": "911176648726",
+    "project_id": "dk4d-c4ca3",
+    "storage_bucket": "dk4d-c4ca3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911176648726:android:b14fe626ae262e0f4d4d37",
+        "android_client_info": {
+          "package_name": "com.js.newsin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911176648726-0b8v15t81qulf48t35bvahgmfrrnvprf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.js.newsin",
+            "certificate_hash": "7b3d0ebeecb0cce085ec909e5cc4be69799da4cd"
+          }
+        },
+        {
+          "client_id": "911176648726-196v75b2vnnv4j0e88kn85a8k9j7ni75.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRXb0THF2vaoI4jTOdUz-HfGyTchfZi2Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911176648726-196v75b2vnnv4j0e88kn85a8k9j7ni75.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911176648726:android:917b271567ddfd424d4d37",
+        "android_client_info": {
+          "package_name": "js.keyword.keywordhub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911176648726-196v75b2vnnv4j0e88kn85a8k9j7ni75.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRXb0THF2vaoI4jTOdUz-HfGyTchfZi2Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911176648726-196v75b2vnnv4j0e88kn85a8k9j7ni75.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911176648726:android:aa52038a0dcd51a44d4d37",
+        "android_client_info": {
+          "package_name": "js.tour.Gabom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911176648726-196v75b2vnnv4j0e88kn85a8k9j7ni75.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRXb0THF2vaoI4jTOdUz-HfGyTchfZi2Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911176648726-196v75b2vnnv4j0e88kn85a8k9j7ni75.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
