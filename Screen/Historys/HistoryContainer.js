@@ -5,10 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
 import { actionCreators } from '../../reducer/store';
 import * as SQLite from 'expo-sqlite';    
-import { StatusBar } from 'react-native';
-import {
-    BackHandler
-} from 'react-native';
+import { StatusBar ,BackHandler} from 'react-native';
 import { CommonActions, useNavigation } from '@react-navigation/native';
 
 

@@ -11,6 +11,13 @@
       <change beforePath="$PROJECT_DIR$/.idea/NewsApp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/NewsApp.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/HeadLineContent.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/HeadLineContent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/PhotoContent.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/PhotoContent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Push/Notification.js" beforeDir="false" afterPath="$PROJECT_DIR$/Push/Notification.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screen/CulturePage/CulturePagePresenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screen/CulturePage/CulturePagePresenter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
