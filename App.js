@@ -23,10 +23,7 @@ const db = SQLite.openDatabase("history.db", 1);
 
 
 export default function App() {
-  
-  //private 에서 public 으로 변경 
-  const [firstAct, setFirst] = useState(1);
-  //private 에서 public 으로 변경 
+
   const [loading, setLoading] = useState(true);
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notifications, setNotifications] = useState(false);
@@ -73,14 +70,12 @@ export default function App() {
     }).then(() => {
      setLoading(false);
     });
-    console.log("첫번째실행 : ", firstAct);
-    initBackgroundFetch("today", myTask, 10);
-    
-    if (firstAct === 1) {
-      
-      setFirst(2);
-      
+    if (expoPushToken !== '') {
+      initBackgroundFetch("today", myTask, 10);
     }
+    
+    
+ 
     db.transaction(tx => {
       tx.executeSql(
           "create table if not exists history (id integer primary key not null , subject text, content text, imgUrl text, link text, date text, nowdate text);"
