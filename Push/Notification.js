@@ -77,7 +77,7 @@ export const sendPushNotification = async (expoPushToken, title, body) =>{
       
     });
 }
-function shuffle(array) { array.sort(() => Math.random() - 0.5); }
+export const shuffle = (array) => { array.sort(() => Math.random() - 0.5); }
 export const scheduleNotification = async () => {
     const category = [
         "business",

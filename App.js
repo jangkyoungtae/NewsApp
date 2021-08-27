@@ -12,13 +12,16 @@ import store from './reducer/store';
 import Historys from './Screen/Historys';
 import * as Notifications from 'expo-notifications';
 import { Button, Text, View } from 'react-native';
-import { asyncFunc, deleteAllNotification, deleteNotification, hasNotificationPermission, scheduleNotification, sendPushNotification } from './Push/Notification';
-import { initBackgroundFetch } from './Push/Alarm';
-
-
-
+import {  hasNotificationPermission,  sendPushNotification, shuffle } from './Push/Notification';
+import * as TaskManager from "expo-task-manager";
+import * as BackgroundFetch from "expo-background-fetch";
+import moment from 'moment'; 
+import { recomendApi } from './api/api';
 const Drawer = createDrawerNavigator();
 const db = SQLite.openDatabase("history.db", 1);
+
+
+const BACKGROUND_FETCH_TASK = 'background-fetch';
 
 
 
@@ -29,23 +32,42 @@ export default function App() {
   const [notifications, setNotifications] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
-  const [state, setState] = useState(null);
-  
-  function myTask() {
-  try {
-    // fetch data here...
-    const backendData = "Simulated fetch " + Math.random();
-    console.log("myTask() ", backendData);
-    sendPushNotification(expoPushToken, "여기는제목", "여기는 내용");
-    setState(backendData);
-    return backendData
-      ? BackgroundFetch.Result.NewData
-      : BackgroundFetch.Result.NoData;
-  } catch (err) {
-    return BackgroundFetch.Result.Failed;
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [status, setStatus] = useState(null);
+
+  TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
+      const category = [
+          "business",
+          "general",
+          "entertainment",
+          "science",
+          "sports",
+          "technology",
+      ]
+      shuffle(category);
+    
+    const [newsContents, newsContentsError] = await recomendApi.newsSearch(category[0], 1);
+    const now = Date.now();
+    sendPushNotification(expoPushToken, newsContents[0].title, newsContents[0].content+"\n"+moment(now).format("YYYY-MM-DD hh:mm:ss"));
+    console.log(`Got background fetch call at date: ${new Date(now).toISOString()}`);
+
+    // Be sure to return the successful result type!
+    return BackgroundFetch.Result.NewData;
+  });
+   async function registerBackgroundFetchAsync() {
+    return BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
+      minimumInterval: 1, // 15 minutes
+      stopOnTerminate: false, // android only,
+      startOnBoot: true, // android only
+    });
   }
-}
-  
+
+  // 3. (Optional) Unregister tasks by specifying the task name
+  // This will cancel any future background fetch calls that match the given name
+  // Note: This does NOT need to be in the global scope and CAN be used in your React components!
+  async function unregisterBackgroundFetchAsync() {
+    return BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
+  }
   useEffect(() => {
     setLoading(true);
     hasNotificationPermission().then((result) => {
@@ -53,16 +75,13 @@ export default function App() {
     });
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       setNotifications(notification);
-      setTimeout(() => {
-        sendPushNotification(expoPushToken, "여기는제목", "여기는 내용");
-      },10000)
+
       console.log("알람호출",+notification);
     });
 
     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
       console.log(response);
-      console.log("알람호출",+response);
     });
     Font.loadAsync({
       godob: require('./assets/font/godob.ttf'),
@@ -70,9 +89,9 @@ export default function App() {
     }).then(() => {
      setLoading(false);
     });
-    if (expoPushToken !== '') {
-      initBackgroundFetch("today", myTask, 10);
-    }
+    
+   checkStatusAsync();
+   
     
     
  
@@ -94,7 +113,26 @@ export default function App() {
       Notifications.removeNotificationSubscription(responseListener.current);
     };
   }, []);
-  
+  const checkStatusAsync = async () => {
+    const status = await BackgroundFetch.getStatusAsync();
+    const isRegistered = await TaskManager.isTaskRegisteredAsync(BACKGROUND_FETCH_TASK);
+    setStatus(status);
+    setIsRegistered(isRegistered);
+    if (!isRegistered) {
+      await registerBackgroundFetchAsync();
+    }
+  };
+
+  const toggleFetchTask = async () => {
+    console.log(isRegistered);
+    if (isRegistered) {
+      await unregisterBackgroundFetchAsync();
+    } else {
+      await registerBackgroundFetchAsync();
+    }
+
+    checkStatusAsync();
+  };
   return (
     <Provider store={store}>
       
@@ -119,7 +157,18 @@ export default function App() {
             options={{ unmountOnBlur: true }}
            
           />
-        </Drawer.Navigator> }  
+        </Drawer.Navigator>}
+        <Text>
+          Background fetch status:{' '}
+          <Text >{status ? BackgroundFetch.Status[status] : null}</Text>
+        </Text>
+        <Text>
+          Background fetch task name:{' '}
+          <Text>
+            {isRegistered ? BACKGROUND_FETCH_TASK : 'Not registered yet!'}
+          </Text>
+          </Text>
+        
       </NavigationContainer>
   
     </Provider>
