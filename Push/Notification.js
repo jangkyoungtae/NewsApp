@@ -62,8 +62,8 @@ export const sendPushNotification = async (expoPushToken, title, body) =>{
       sound: 'default',
       title,
       body,
-        data: { someData: 'goes here' },
-    
+        data: { someData: 'https://bleepcoder.com/ko/expo/537970924/listener-registerd-in-addlistener-is-not-called-when' },
+        channelId:"news-notify",
     };
 
     await fetch('https://exp.host/--/api/v2/push/send', {
@@ -72,8 +72,9 @@ export const sendPushNotification = async (expoPushToken, title, body) =>{
         Accept: 'application/json',
         'Accept-encoding': 'gzip, deflate',
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(message),
+        },
+        body: JSON.stringify(message),
+      
     });
 }
 function shuffle(array) { array.sort(() => Math.random() - 0.5); }

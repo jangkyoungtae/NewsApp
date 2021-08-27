@@ -40,7 +40,7 @@ const DateText = styled.Text`
     line-height:14px;
      margin-left:10px;  
 `
-export default ({ id,url, title, content, date, font, link,isHistory}) => {
+export default ({ id,url, title, content, date, font, link,isHistory,mode}) => {
     const navigation = useNavigation();
      const goContents = () => {
         if (isHistory==="true") {
@@ -68,19 +68,24 @@ export default ({ id,url, title, content, date, font, link,isHistory}) => {
     }
     return (
      <TouchableOpacity onPress={goContents}>
-        <HeadLineContainer>            
-            <TextContainer>
+        <HeadLineContainer  style={{
+                    backgroundColor:  mode  == 'false'  ? "white": "black",
+                }}>                       
+            <TextContainer style={{
+                        backgroundColor:  mode  == 'false'  ? "#f6f6f6": "#5e5e5e",
+                    }}>
                     <DateText
                     style={{
                             fontSize: font - 1,
                             lineHeight: font + 3,
-                        
+                            color:mode  == 'false'  ? "black": "white",
                         }}
                     >{date}</DateText>
                     <Title
                         style={{
                             fontSize: font + 3,
                             lineHeight: font + 7,
+                            color:mode  == 'false'  ? "black": "white",
                             
                         }}
                         numberOfLines={1}>{title}</Title>
@@ -88,7 +93,7 @@ export default ({ id,url, title, content, date, font, link,isHistory}) => {
                         style={{
                             fontSize: font - 1,
                             lineHeight: font + 3,
-                            
+                            color:mode  == 'false'  ? "black": "white",
                         }}
                         numberOfLines={3}>{content}</Contents>
             </TextContainer>

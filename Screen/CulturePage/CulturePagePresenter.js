@@ -36,7 +36,7 @@ export default ({ loading, sort, mode,newsContents ,handleLoadMore,font,endConte
     }
     const renderItem = ({ item }) => {
         if (item.ImageUrl !== "" && item.ImageUrl !==undefined) {            
-            console.log(mode);
+            
             if(sort == 1 )
                 return <RecommendContent
                     font={font}

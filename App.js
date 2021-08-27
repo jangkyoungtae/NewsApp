@@ -13,6 +13,7 @@ import Historys from './Screen/Historys';
 import * as Notifications from 'expo-notifications';
 import { Button, Text, View } from 'react-native';
 import { asyncFunc, deleteAllNotification, deleteNotification, hasNotificationPermission, scheduleNotification, sendPushNotification } from './Push/Notification';
+import { initBackgroundFetch } from './Push/Alarm';
 
 
 
@@ -24,13 +25,29 @@ const db = SQLite.openDatabase("history.db", 1);
 export default function App() {
   
   //private 에서 public 으로 변경 
- 
+  const [firstAct, setFirst] = useState(1);
   //private 에서 public 으로 변경 
   const [loading, setLoading] = useState(true);
   const [expoPushToken, setExpoPushToken] = useState('');
-  const [notification, setNotification] = useState(false);
+  const [notifications, setNotifications] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+  const [state, setState] = useState(null);
+  
+  function myTask() {
+  try {
+    // fetch data here...
+    const backendData = "Simulated fetch " + Math.random();
+    console.log("myTask() ", backendData);
+    sendPushNotification(expoPushToken, "여기는제목", "여기는 내용");
+    setState(backendData);
+    return backendData
+      ? BackgroundFetch.Result.NewData
+      : BackgroundFetch.Result.NoData;
+  } catch (err) {
+    return BackgroundFetch.Result.Failed;
+  }
+}
   
   useEffect(() => {
     setLoading(true);
@@ -38,12 +55,17 @@ export default function App() {
       setExpoPushToken(result);
     });
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
+      setNotifications(notification);
+      setTimeout(() => {
+        sendPushNotification(expoPushToken, "여기는제목", "여기는 내용");
+      },10000)
+      console.log("알람호출",+notification);
     });
 
     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
       console.log(response);
+      console.log("알람호출",+response);
     });
     Font.loadAsync({
       godob: require('./assets/font/godob.ttf'),
@@ -51,7 +73,14 @@ export default function App() {
     }).then(() => {
      setLoading(false);
     });
-   
+    console.log("첫번째실행 : ", firstAct);
+    initBackgroundFetch("today", myTask, 10);
+    
+    if (firstAct === 1) {
+      
+      setFirst(2);
+      
+    }
     db.transaction(tx => {
       tx.executeSql(
           "create table if not exists history (id integer primary key not null , subject text, content text, imgUrl text, link text, date text, nowdate text);"
@@ -75,7 +104,7 @@ export default function App() {
     <Provider store={store}>
       
       <NavigationContainer >
-        <Drawer.Navigator
+        {!loading && <Drawer.Navigator
           
           drawerType='front'
           drawerPosition='right'
@@ -95,7 +124,7 @@ export default function App() {
             options={{ unmountOnBlur: true }}
            
           />
-        </Drawer.Navigator>       
+        </Drawer.Navigator> }  
       </NavigationContainer>
   
     </Provider>
