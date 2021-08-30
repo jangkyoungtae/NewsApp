@@ -78,6 +78,9 @@ function Sidebar({props,mode ,font,changeFontSize, changeSort,changeMode}) {
     const goSecurity = async () => {
         await Linking.openURL("http://js-media.kr/securitynews.html");
     }
+    const goSetting = async () => {
+        await Linking.openSettings();
+    }
 
     
     return (
@@ -105,7 +108,7 @@ function Sidebar({props,mode ,font,changeFontSize, changeSort,changeMode}) {
                         />
                     <Title
                         style={{
-                            fontSize: font + 7,
+                            fontSize: Number(font) + 7,
                             color:mode ==="false" ? "black": "white",
                     }}>설정</Title>
                     <MaterialCommunityIcons
@@ -121,7 +124,7 @@ function Sidebar({props,mode ,font,changeFontSize, changeSort,changeMode}) {
                 </TitleContainer>
                 <ContentTitle
                     style={{
-                        fontSize: font + 4,
+                        fontSize: Number(font) + 4,
                         color:mode ==="false" ? "black": "white",
                     }}
                     onPress={onPressOpenSort}>정렬</ContentTitle>
@@ -129,7 +132,7 @@ function Sidebar({props,mode ,font,changeFontSize, changeSort,changeMode}) {
                     label="일반 정렬"
                     labelStyle={{
                         alignSelf: 'flex-end',
-                        fontSize: font,
+                        fontSize: Number(font),
                         fontFamily: 'godob',
                         color:mode ==="false" ? "black": "white",
                     }}
@@ -139,7 +142,7 @@ function Sidebar({props,mode ,font,changeFontSize, changeSort,changeMode}) {
                     label="포토 정렬"
                     labelStyle={{
                         alignSelf: 'flex-end',
-                        fontSize: font,
+                        fontSize: Number(font),
                         fontFamily: 'godob',
                         color:mode ==="false" ? "black": "white",
 
@@ -150,7 +153,7 @@ function Sidebar({props,mode ,font,changeFontSize, changeSort,changeMode}) {
                     label="헤드라인 정렬"
                     labelStyle={{
                         alignSelf: 'flex-end',
-                        fontSize: font,
+                        fontSize: Number(font),
                         fontFamily: 'godob',
                         color:mode ==="false" ? "black": "white",
                     }}
@@ -158,7 +161,7 @@ function Sidebar({props,mode ,font,changeFontSize, changeSort,changeMode}) {
                 />}
                 <ContentTitle
                     style={{
-                        fontSize: font + 4,
+                        fontSize: Number(font) + 4,
                         color:mode ==="false" ? "black": "white",
                     }}
                     onPress={onPressOpenMode}>다크모드</ContentTitle>
@@ -166,7 +169,7 @@ function Sidebar({props,mode ,font,changeFontSize, changeSort,changeMode}) {
                     label="일반모드"
                     labelStyle={{
                         alignSelf: 'flex-end',
-                        fontSize: font,
+                        fontSize: Number(font),
                         fontFamily: 'godob',
                         color:mode ==="false" ? "black": "white",
                     }}
@@ -176,7 +179,7 @@ function Sidebar({props,mode ,font,changeFontSize, changeSort,changeMode}) {
                     label="다크모드"
                     labelStyle={{
                         alignSelf: 'flex-end',
-                        fontSize: font,
+                        fontSize: Number(font),
                         fontFamily: 'godob',
                         color:mode ==="false" ? "black": "white",
                     }}
@@ -184,7 +187,7 @@ function Sidebar({props,mode ,font,changeFontSize, changeSort,changeMode}) {
                 />}
                 <ContentTitle
                     style={{
-                        fontSize: font + 4,
+                        fontSize: Number(font) + 4,
                         color:mode ==="false" ? "black": "white",
                     }}
                     onPress={onPressOpenFont}>글자 크기 변경</ContentTitle>
@@ -192,38 +195,44 @@ function Sidebar({props,mode ,font,changeFontSize, changeSort,changeMode}) {
                     label="보통"
                     labelStyle={{
                         alignSelf: 'flex-end',
-                        fontSize: font,
+                        fontSize: Number(font),
                         fontFamily: 'godob',
                         color:mode ==="false" ? "black": "white",
                     }}
-                    onPress={() => saveFontSize(13)}
+                    onPress={() => saveFontSize("13")}
                 />}
                 {openFont && <DrawerItem
                     label="크게"
                     labelStyle={{
                         alignSelf: 'flex-end',
-                        fontSize: font,
+                        fontSize: Number(font),
                         fontFamily: 'godob',
                         color:mode ==="false" ? "black": "white",
                     }}
-                    onPress={() => saveFontSize(17)}
+                    onPress={() => saveFontSize("17")}
                 />}
                 {openFont && <DrawerItem
                     label="아주크게"
                     labelStyle={{
                         alignSelf: 'flex-end',
-                        fontSize: font ,
+                        fontSize: Number(font) ,
                         fontFamily: 'godob',
                         color:mode ==="false" ? "black": "white",
                     }}
-                    onPress={() => saveFontSize(20)}
+                    onPress={() => saveFontSize("20")}
                 />}
                
-               
+               <ContentTitle
+                    onPress={goSetting}
+                style={{
+                    fontSize: Number(font) + 4,
+                    color:mode ==="false" ? "black": "white",
+                    }}
+                >알람 설정</ContentTitle>
                 <ContentTitle
                     onPress={goSecurity}
                 style={{
-                    fontSize: font + 4,
+                    fontSize: Number(font) + 4,
                     color:mode ==="false" ? "black": "white",
                     }}
                 >개인정보 처리 방침</ContentTitle>
@@ -234,7 +243,7 @@ function Sidebar({props,mode ,font,changeFontSize, changeSort,changeMode}) {
                     labelStyle={{                         
                         alignSelf: 'flex-start',
                         paddingLeft: 20,
-                        fontSize: font +4,
+                        fontSize: Number(font) +4,
                         fontFamily: 'godob',
                         color:mode ==="false" ? "black": "white",
                     }}

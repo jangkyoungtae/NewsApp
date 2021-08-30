@@ -81,41 +81,43 @@ export default ({ id, url, title, content, date, font, link,isHistory ,mode}) =>
         
     }
     return (
-        <TouchableOpacity onPress={goContents}>
-            <PhotoContainer style={{
-                    backgroundColor:  mode  == 'false'  ? "white": "black",
-                }}>                    
-                <ImageContainer>
-                    <ImageBox source={{ uri: url }} />
-                </ImageContainer>                
-                <TextContainer style={{
-                        backgroundColor:  mode  == 'false'  ? "#f6f6f6": "#5e5e5e",
+        <>
+            {font && <TouchableOpacity onPress={goContents}>
+                <PhotoContainer style={{
+                    backgroundColor: mode == 'false' ? "white" : "black",
+                }}>
+                    <ImageContainer>
+                        <ImageBox source={{ uri: url }} />
+                    </ImageContainer>
+                    <TextContainer style={{
+                        backgroundColor: mode == 'false' ? "#f6f6f6" : "#5e5e5e",
                     }}>
-                    <DateText
-                        style={{
-                            fontSize: font - 1,
-                            lineHeight: font + 3,
-                             color:mode  == 'false'  ? "black": "white",
-                        }}
-                    >{date}</DateText>
-                    <Title
-                        style={{
-                            fontSize: font + 3,
-                            lineHeight: font + 7,
-                             color:mode  == 'false'  ? "black": "white",
+                        <DateText
+                            style={{
+                                fontSize: Number(font) - 1,
+                                lineHeight: Number(font) + 3,
+                                color: mode == 'false' ? "black" : "white",
+                            }}
+                        >{date}</DateText>
+                        <Title
+                            style={{
+                                fontSize: Number(font) + 3,
+                                lineHeight: Number(font) + 7,
+                                color: mode == 'false' ? "black" : "white",
                             
-                        }}
-                        numberOfLines={1}>{title}</Title>
-                    <Contents
-                        style={{
-                            fontSize: font - 1,
-                            lineHeight: font + 3,
-                             color:mode  == 'false'  ? "black": "white",
-                        }}
-                        numberOfLines={3}>{content}</Contents>
-                </TextContainer>
-            </PhotoContainer>
+                            }}
+                            numberOfLines={1}>{title}</Title>
+                        <Contents
+                            style={{
+                                fontSize: Number(font) - 1,
+                                lineHeight: Number(font) + 3,
+                                color: mode == 'false' ? "black" : "white",
+                            }}
+                            numberOfLines={3}>{content}</Contents>
+                    </TextContainer>
+                </PhotoContainer>
             
-        </TouchableOpacity>
+            </TouchableOpacity>}
+            </>
     );
 }

@@ -94,7 +94,7 @@ export default ({ id,imageUrl, title, content, date, font,link ,isHistory,mode})
     return (
     <>
             {!isEmpty(imageUrl) &&
-                <TouchableOpacity onPress={goContents}>
+                font && <TouchableOpacity onPress={goContents}>
                 <RecommendContainer style={{
                     backgroundColor:  mode  == 'false'  ? "white": "black",
                 }}>                    
@@ -109,16 +109,16 @@ export default ({ id,imageUrl, title, content, date, font,link ,isHistory,mode})
                     }}>
                     <DateText
                         style={{
-                            fontSize: font - 1,
-                                lineHeight: font + 3,
+                            fontSize: Number(font) - 1,
+                                lineHeight: Number(font) + 3,
                             color:mode  == 'false'  ? "black": "white",
                             
                         }}
                     >{date}</DateText>
                     <Title                        
                         style={{
-                            fontSize: font + 3,
-                            lineHeight: font + 7,
+                            fontSize: Number(font) + 3,
+                            lineHeight: Number(font) + 7,
                             color:mode  == 'false'  ? "black": "white",
                             
                             
@@ -126,8 +126,8 @@ export default ({ id,imageUrl, title, content, date, font,link ,isHistory,mode})
                         numberOfLines={1}>{title}</Title>
                     <Contents
                         style={{
-                            fontSize: font - 1,
-                                lineHeight: font + 3,
+                            fontSize: Number(font) - 1,
+                                lineHeight: Number(font) + 3,
                             color:mode  == 'false'  ? "black": "white",
                         }}
                         numberOfLines={3}

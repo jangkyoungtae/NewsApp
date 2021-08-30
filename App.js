@@ -11,14 +11,14 @@ import {  Provider } from 'react-redux';
 import store from './reducer/store';
 import Historys from './Screen/Historys';
 import * as Notifications from 'expo-notifications';
-import { Button, Text, View } from 'react-native';
+import { Alert, Button, Text, View } from 'react-native';
 import {  hasNotificationPermission,  sendPushNotification, shuffle } from './Push/Notification';
 import * as TaskManager from "expo-task-manager";
 import * as BackgroundFetch from "expo-background-fetch";
 import moment from 'moment'; 
 import { recomendApi } from './api/api';
 const Drawer = createDrawerNavigator();
-const db = SQLite.openDatabase("history.db", 1);
+
 
 
 const BACKGROUND_FETCH_TASK = 'background-fetch';
@@ -56,7 +56,7 @@ export default function App() {
   });
    async function registerBackgroundFetchAsync() {
     return BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-      minimumInterval: 1, // 15 minutes
+      minimumInterval: 60, // 15 minutes
       stopOnTerminate: false, // android only,
       startOnBoot: true, // android only
     });
@@ -75,13 +75,13 @@ export default function App() {
     });
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       setNotifications(notification);
-
-      console.log("알람호출",+notification);
+      Alert.alert(`알람호출완료 : ${notification}`);
     });
 
     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
       console.log(response);
+      console.warn("알람리스폰", notification);
     });
     Font.loadAsync({
       godob: require('./assets/font/godob.ttf'),
@@ -89,24 +89,19 @@ export default function App() {
     }).then(() => {
      setLoading(false);
     });
-    
-   checkStatusAsync();
+    //로컬 알람 등록
+   //checkStatusAsync();
    
     
-    
- 
-    db.transaction(tx => {
-      tx.executeSql(
-          "create table if not exists history (id integer primary key not null , subject text, content text, imgUrl text, link text, date text, nowdate text);"
-      );
-    },
-      (err) => {
-          console.log("디비생성실패",err)
-      },
-      (result) => {
-          console.log("디비생성",result)
-      }
-    );
+    const db = SQLite.openDatabase("history.db", 1);
+    if (db !== undefined || db !== null) {
+      db.transaction(tx => {
+          tx.executeSql(
+              "create table if not exists history (id integer primary key not null , subject text, content text, imgUrl text, link text, date text, nowdate text);"
+          );
+        });
+    }
+      
     
     return () => {
       Notifications.removeNotificationSubscription(notificationListener.current);
@@ -119,7 +114,9 @@ export default function App() {
     setStatus(status);
     setIsRegistered(isRegistered);
     if (!isRegistered) {
-      await registerBackgroundFetchAsync();
+      await registerBackgroundFetchAsync().then(() => {
+        console.log("서비스 실행");
+      });
     }
   };
 
@@ -158,16 +155,7 @@ export default function App() {
            
           />
         </Drawer.Navigator>}
-        <Text>
-          Background fetch status:{' '}
-          <Text >{status ? BackgroundFetch.Status[status] : null}</Text>
-        </Text>
-        <Text>
-          Background fetch task name:{' '}
-          <Text>
-            {isRegistered ? BACKGROUND_FETCH_TASK : 'Not registered yet!'}
-          </Text>
-          </Text>
+     
         
       </NavigationContainer>
   

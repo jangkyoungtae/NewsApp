@@ -29,7 +29,7 @@ const changeRefresh = (refresh) => {
         refresh
     }
 }
-const reducer = (state = { 'sort': '1', 'font': 13 ,'mode': 'false', 'refresh': '0'}, action) => {   
+const reducer = (state = { 'sort': '1', 'font': '13' ,'mode': 'false', 'refresh': '0'}, action) => {   
     if (action.type === "SORT") {
         return {'sort':action.sort,'font':state.font,'mode': state.mode,'refresh': state.refresh};
     } else if (action.type === "FONT") {

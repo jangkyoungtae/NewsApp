@@ -67,7 +67,8 @@ export default ({ id,url, title, content, date, font, link,isHistory,mode}) => {
         
     }
     return (
-     <TouchableOpacity onPress={goContents}>
+        <>
+      {font &&<TouchableOpacity onPress={goContents}>
         <HeadLineContainer  style={{
                     backgroundColor:  mode  == 'false'  ? "white": "black",
                 }}>                       
@@ -76,29 +77,30 @@ export default ({ id,url, title, content, date, font, link,isHistory,mode}) => {
                     }}>
                     <DateText
                     style={{
-                            fontSize: font - 1,
-                            lineHeight: font + 3,
+                            fontSize: Number(font) - 1,
+                            lineHeight: Number(font) + 3,
                             color:mode  == 'false'  ? "black": "white",
                         }}
                     >{date}</DateText>
                     <Title
                         style={{
-                            fontSize: font + 3,
-                            lineHeight: font + 7,
+                            fontSize: Number(font) + 3,
+                            lineHeight: Number(font) + 7,
                             color:mode  == 'false'  ? "black": "white",
                             
                         }}
                         numberOfLines={1}>{title}</Title>
                     <Contents
                         style={{
-                            fontSize: font - 1,
-                            lineHeight: font + 3,
+                            fontSize: Number(font) - 1,
+                            lineHeight: Number(font) + 3,
                             color:mode  == 'false'  ? "black": "white",
                         }}
                         numberOfLines={3}>{content}</Contents>
             </TextContainer>
         </HeadLineContainer>
         
-    </TouchableOpacity>
+            </TouchableOpacity>}
+            </>
     );
 }

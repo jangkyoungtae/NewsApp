@@ -51,7 +51,8 @@ export const hasNotificationPermission = async () => {
   } catch (error) {
     Alert.alert(
       'Error',
-      'Something went wrong while check your notification permissions, please try again later.'
+        'Something went wrong while check your notification permissions, please try again later.'
+      ,error
     );
     return false;
   }
