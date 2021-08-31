@@ -17,6 +17,7 @@ import * as TaskManager from "expo-task-manager";
 import * as BackgroundFetch from "expo-background-fetch";
 import moment from 'moment'; 
 import { recomendApi } from './api/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Drawer = createDrawerNavigator();
 
 
@@ -34,6 +35,7 @@ export default function App() {
   const responseListener = useRef();
   const [isRegistered, setIsRegistered] = useState(false);
   const [status, setStatus] = useState(null);
+  const [alram, setAlram] = useState("true");
 
   TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
       const category = [
@@ -70,12 +72,17 @@ export default function App() {
   }
   useEffect(() => {
     setLoading(true);
-    hasNotificationPermission().then((result) => {
-      setExpoPushToken(result);
+    AsyncStorage.getItem("alram", (err,results) => {
+      if (results !== null || results !== undefined) {
+        console.log("알람", results);
+        hasNotificationPermission(results).then((result) => {
+        setExpoPushToken(result);
     });
+      }
+    });
+    
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       setNotifications(notification);
-      Alert.alert(`알람호출완료 : ${notification}`);
     });
 
     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)

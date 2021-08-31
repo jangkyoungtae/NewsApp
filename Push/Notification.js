@@ -3,9 +3,11 @@ import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions'
 import { getContent } from '../sqldata';
 import { recomendApi } from '../api/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState } from 'react';
 
 
-export const hasNotificationPermission = async () => {
+export const hasNotificationPermission = async (alram) => {
     Notifications.setNotificationHandler({
         handleNotification: async () => ({
             shouldShowAlert: true,
@@ -21,20 +23,30 @@ export const hasNotificationPermission = async () => {
         if (existingStatus !== 'granted') {
             const { status } = await Notifications.requestPermissionsAsync();
             finalStatus = status;
-        }  
+        }
+        console.log(alram);
         if (finalStatus !== 'granted') {
-            Alert.alert(
+            if (alram==="true"|| alram===null) {
+                 Alert.alert(
                 '권한요청',
                 '푸시 알림을 활성화하지 않으면 미리 알림을 받을 수 없습니다. 알림을 받으려면 설정에서 푸시 알림을 활성화하세요.',
                 [
-                { text: '취소' },
-                // If they said no initially and want to change their mind,
-                // we can automatically open our app in their settings
-                // so there's less friction in turning notifications on
+                    {
+                        text: '끄기', onPress: () => AsyncStorage.setItem("alram", "false", () => {
+                            console.log("false");
+                    }) },
+                    // If they said no initially and want to change their mind,
+                    // we can automatically open our app in their settings
+                    // so there's less friction in turning notifications on
                     { text: '설정', onPress: () => Platform.OS === 'ios' ? Linking.openURL('app-settings:') : Linking.openSettings() }
                 ]
-            )
-            return false;
+                );
+                 return false;
+            } else {
+                 return false;
+            }
+           
+           
         }
         token = (await Notifications.getExpoPushTokenAsync()).data;
         console.log(token);

@@ -125,7 +125,7 @@ function HistoryContainer({ route, sort, font, mode, changeFontSize, changeSort,
                     saveFontSize("13");
                     resolve("13");
                 } else {
-                    changeFontSize(Number(result));
+                    changeFontSize(result);
                     resolve(""+result);
                     
                 }
@@ -176,7 +176,7 @@ function HistoryContainer({ route, sort, font, mode, changeFontSize, changeSort,
                 route={route}
                 sort={sort}
                 mode={mode}
-                font={font}
+                font={Number(font)}
                 {...searData}
                 navigation={navigation}
             />
