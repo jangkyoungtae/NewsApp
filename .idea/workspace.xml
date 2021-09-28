@@ -7,7 +7,20 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6403a45-8d43-42ad-bc51-9fd01f845ebe" name="Default Changelist" comment="" />
+    <list default="true" id="b6403a45-8d43-42ad-bc51-9fd01f845ebe" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screen/CulturePage/CulturePagePresenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screen/CulturePage/CulturePagePresenter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screen/EconomyPage/EconomyPagePresenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screen/EconomyPage/EconomyPagePresenter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screen/EnterPage/EnterPagePresenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screen/EnterPage/EnterPagePresenter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screen/GoodPage/GoodPagePresenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screen/GoodPage/GoodPagePresenter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screen/Historys/HistoryContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screen/Historys/HistoryContainer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screen/Historys/HistoryPresenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screen/Historys/HistoryPresenter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screen/ITPage/ITPagePresenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screen/ITPage/ITPagePresenter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screen/SportsPage/SportsPagePresenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screen/SportsPage/SportsPagePresenter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,21 +68,36 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2560" y="255" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1629955365974" />
-    <state width="1877" height="100" key="GridCell.Tab.0.bottom" timestamp="1630311272456">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="937" height="687" key="GridCell.Tab.0.bottom" timestamp="1632712526503">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="937" height="687" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1632712526503" />
     <state width="1877" height="100" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630311272456" />
-    <state width="1877" height="100" key="GridCell.Tab.0.center" timestamp="1630311272456">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="937" height="687" key="GridCell.Tab.0.center" timestamp="1632712526502">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="937" height="687" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1632712526502" />
     <state width="1877" height="100" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630311272456" />
-    <state width="1877" height="100" key="GridCell.Tab.0.left" timestamp="1630311272456">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="937" height="687" key="GridCell.Tab.0.left" timestamp="1632712526502">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="937" height="687" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1632712526502" />
     <state width="1877" height="100" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630311272456" />
-    <state width="1877" height="100" key="GridCell.Tab.0.right" timestamp="1630311272456">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state width="937" height="687" key="GridCell.Tab.0.right" timestamp="1632712526503">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="937" height="687" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1632712526503" />
     <state width="1877" height="100" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1630311272456" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/node_modules/@react-native-firebase/app/android/src/reactnative/java/io/invertase/firebase/interfaces/ContextProvider.java</url>
+          <line>6</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

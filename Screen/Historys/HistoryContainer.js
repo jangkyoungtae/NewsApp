@@ -19,23 +19,31 @@ function HistoryContainer({ route, sort, font, mode, changeFontSize, changeSort,
     const [searData, setSearData] = useState({
         loading: true,
         newsContents: [],
+        newsContentsError: [],
     });
     
-    const getData = async () => {
-            await db.transaction(            
+    const getData =  () => {
+            db.transaction(            
             tx => {                
                 tx.executeSql("select * from history order by nowDate desc", [], (_, { rows }) => {
                     setSearData({
                         loading: false,
-                        newsContents: rows           
+                        newsContents: rows,
+                        newsContentsError:[],
+                        
                     })
                 });
             },
             (err) => {
-                    console.log("sql 없음 :" ,err)
+                setSearData({
+                    loading: false,
+                    newsContents: [],
+                    newsContentsError: err,
+                        
+                });
             },
         );
-        
+    
         
     }
     const isEmpty = function (value) {

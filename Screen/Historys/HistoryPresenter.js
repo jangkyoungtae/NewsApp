@@ -1,25 +1,31 @@
 
 import React, { useState } from 'react';
-import { ActivityIndicator,   FlatList, RefreshControl, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator,   Dimensions,   FlatList, RefreshControl, Text, TouchableOpacity, View } from 'react-native';
 import HeadLineContent from '../../Component/HeadLineContent';
 import PhotoContent from '../../Component/PhotoContent';
 import RecommendContent from '../../Component/RecommendContent';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { Swipeable } from 'react-native-gesture-handler';
 import { deleteData } from '../../sqldata';
+import {
+  AdMobBanner,
+} from 'expo-ads-admob';
+const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
+import Constants from 'expo-constants';
+
+const testID = 'ca-app-pub-3940256099942544/6300978111';
+const productionID = 'ca-app-pub-1441798552294944/5131467909';
+// Is a real device and running in production.
+const adUnitID = Constants.isDevice && !__DEV__ ? productionID : testID;
 
 export default ({ loading, sort,mode, newsContents, font, navigation }) => {
-   
-
     const [contentList, setContentList] = useState(newsContents._array);
-
     const handleDelete = (index) => {
         const array = [...contentList];
         deleteData(array[index].subject);
-         console.log("인덱스", array[index].subject);
+        console.log("인덱스", array[index].subject);
         array.splice(index, 1);
-        setContentList(array);        
-       
+        setContentList(array);
     }
     const deleteContent = (index) => {
         return (
@@ -73,7 +79,9 @@ export default ({ loading, sort,mode, newsContents, font, navigation }) => {
                  );
             else if(sort == 2 )
                 return (
-                    <Swipeable renderRightActions={deleteContent(index)}>
+                   <Swipeable renderRightActions={() => {
+                         return deleteContent(index);
+                     }}>
                         <PhotoContent
                             font={font}
                             mode={mode}
@@ -89,7 +97,9 @@ export default ({ loading, sort,mode, newsContents, font, navigation }) => {
                 )
             else if(sort == 3)
                 return (
-                    <Swipeable renderRightActions={deleteContent(index)}>
+                   <Swipeable renderRightActions={() => {
+                         return deleteContent(index);
+                     }}>
                         <HeadLineContent
                             font={font}
                             mode={mode}
@@ -126,7 +136,8 @@ export default ({ loading, sort,mode, newsContents, font, navigation }) => {
             {!loading ? <View
                 style={{
                     flex:1,
-                flexDirection:"column"
+                    flexDirection: "column",
+                     backgroundColor:mode ==="true" ? "black": "white",
                 }}   
             >
                 <View
@@ -157,13 +168,35 @@ export default ({ loading, sort,mode, newsContents, font, navigation }) => {
                                 navigationProps={navigation} />
                     </View>
                     </View>
-                <FlatList
+                {newsContents.length > 0 ? <FlatList
                     data={contentList ? contentList : setContentList(newsContents._array)}
                     renderItem={renderItem}
-                    keyExtractor={item =>  Math.round(Number(item.id)*Math.random() * 13123561
-                        ).toString()}
+                    keyExtractor={item => Math.round(Number(item.id) * Math.random() * 13123561
+                    ).toString()}
                    
-                />
+                /> : <View
+                        style={{
+                            flex: 1,
+                            alignContent: 'center',
+                            justifyContent: 'center',
+                            alignSelf: 'center',
+                            
+                        }}
+                    ><Text style={{
+                            fontSize: font + 4,
+                            color:mode ==="true" ? "white": "black",
+                        
+                    }}>기사 목록이 없습니다.</Text></View>}
+                 <AdMobBanner
+                        style={{
+                            width: WIDTH,
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}
+                        bannerSize="banner"
+                        adUnitID={adUnitID} 
+                    servePersonalizedAds 
+                    onDidFailToReceiveAdWithError={"에러"} />
             </View> : <ActivityIndicator size={'large'} color={'black'} />}
             </>
     );
