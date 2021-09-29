@@ -18,6 +18,7 @@ import * as BackgroundFetch from "expo-background-fetch";
 import moment from 'moment'; 
 import { recomendApi } from './api/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import NewsSearch from './Screen/NewsSearch';
 const Drawer = createDrawerNavigator();
 
 
@@ -36,7 +37,7 @@ export default function App() {
   const [isRegistered, setIsRegistered] = useState(false);
   const [status, setStatus] = useState(null);
   const [alram, setAlram] = useState("true");
-
+  
   TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
       const category = [
           "business",
@@ -158,7 +159,11 @@ export default function App() {
           <Drawer.Screen
             name="내가 본 기사"
             component={Historys}
-            options={{ unmountOnBlur: true }}
+            options={{ unmountOnBlur: true }}           
+          />
+          <Drawer.Screen
+            name="뉴스 검색"
+            component={NewsSearch}
            
           />
         </Drawer.Navigator>}

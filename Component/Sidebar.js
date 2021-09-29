@@ -34,7 +34,7 @@ function Sidebar({props,mode ,font,changeFontSize, changeSort,changeMode}) {
     const [openSort, setOpenSort] = useState(true);
     const [openFont, setOpenFont] = useState(true);
     const [openMode, setOpenMode] = useState(true);
-  
+    
      const setMode = (modes) => {      
          AsyncStorage.setItem("mode", modes, () => {
                 console.log("mode 결과 : ",modes);
@@ -81,6 +81,9 @@ function Sidebar({props,mode ,font,changeFontSize, changeSort,changeMode}) {
     const goSetting = async () => {
         await Linking.openSettings();
     }
+    const goSearch = async () => {
+        await Linking.openSettings();
+    }
 
     
     return (
@@ -122,6 +125,20 @@ function Sidebar({props,mode ,font,changeFontSize, changeSort,changeMode}) {
                         color={mode ==="false" ? "black": "white"}
                         />
                 </TitleContainer>
+                 <DrawerItemList
+                    activeBackgroundColor={"gray"}
+                    activeTintColor={"white"}
+                    inactiveTintColor={"black"}
+                    labelStyle={{                         
+                        alignSelf: 'flex-start',
+                        paddingLeft: 20,
+                        fontSize: Number(font) +4,
+                        fontFamily: 'godob',
+                        color:mode ==="false" ? "black": "white",
+                    }}
+                    
+                    {...props}
+                />
                 <ContentTitle
                     style={{
                         fontSize: Number(font) + 4,
@@ -236,20 +253,7 @@ function Sidebar({props,mode ,font,changeFontSize, changeSort,changeMode}) {
                     color:mode ==="false" ? "black": "white",
                     }}
                 >개인정보 처리 방침</ContentTitle>
-                <DrawerItemList
-                    activeBackgroundColor={"gray"}
-                    activeTintColor={"white"}
-                    inactiveTintColor={"black"}
-                    labelStyle={{                         
-                        alignSelf: 'flex-start',
-                        paddingLeft: 20,
-                        fontSize: Number(font) +4,
-                        fontFamily: 'godob',
-                        color:mode ==="false" ? "black": "white",
-                    }}
-                    
-                    {...props}
-                />
+                
                     
             </DrawerContentScrollView>
         </SafeAreaView>

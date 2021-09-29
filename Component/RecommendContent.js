@@ -52,7 +52,7 @@ const DateText = styled.Text`
     line-height:14px;
      margin-left:10px;  
 `
-export default ({ id,imageUrl, title, content, date, font,link ,isHistory,mode}) => {
+export default ({ id,imageUrl, title, content, date, font,link ,isHistory,mode,search,category}) => {
     const navigation = useNavigation();
     
     const isEmpty = function (value) {
@@ -78,6 +78,26 @@ export default ({ id,imageUrl, title, content, date, font,link ,isHistory,mode})
                             name: 'NewsContents',
                             url: link,
                             history:isHistory
+                        },
+                    ],
+                })
+            );
+        } else if (isHistory==="search") {
+            navigation.navigate("NewsContents");            
+            navigation.dispatch(
+                CommonActions.reset({
+                    index: 1,
+                    routes: [
+                        {
+                            name: 'NewsSearch',
+                            backData: search,
+                            category,
+                        },
+                        {
+                            name: 'NewsContents',
+                            url: link,
+                            history: isHistory,
+                            backData:search
                         },
                     ],
                 })

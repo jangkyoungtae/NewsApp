@@ -5,6 +5,7 @@ import Tabs from './Tabs';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import {  BackHandler, TouchableOpacity, View } from 'react-native';
 import NewsContents from '../Screen/NewsContents';
+import NewsSearch from '../Screen/NewsSearch';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
@@ -42,6 +43,9 @@ export default ({ route, navigation }) => {
         
             <Stack.Screen name="Tabs" component={Tabs} />
             <Stack.Screen name="NewsContents" component={NewsContents} />
+            <Stack.Screen name="NewsSearch" component={NewsSearch} options={{
+                headerShown:false,
+            }}/>
             
         </Stack.Navigator>
     );
