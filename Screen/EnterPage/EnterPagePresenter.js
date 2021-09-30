@@ -9,13 +9,13 @@ import {
 } from 'expo-ads-admob';
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 import Constants from 'expo-constants';
+import NewsSearch from '../../Component/NewsSearch';
 
 const testID = 'ca-app-pub-3940256099942544/6300978111';
-const productionID = 'ca-app-pub-1441798552294944/3399583835';
+const productionID = 'ca-app-pub-1441798552294944/7390799735';
 // Is a real device and running in production.
 const adUnitID = Constants.isDevice && !__DEV__ ? productionID : testID;
-
-export default ({ loading, sort,mode, newsContents ,handleLoadMore,font,endContent ,getData}) => {
+export default ({ loading, sort,mode,text,searchmode, newsContents ,handleLoadMore,font,endContent,getData}) => {
     const [refreshing, setRefreshing] = useState(false);
     const [loadMore, setLoadMore] = useState(false);
     const isLoadMore = () => {
@@ -52,6 +52,7 @@ export default ({ loading, sort,mode, newsContents ,handleLoadMore,font,endConte
                     font={font}
                     mode={mode}
                     key={item.id}
+                    id={item.id}
                     title={item.title}
                     content={item.content}
                     imageUrl={item.ImageUrl}
@@ -63,6 +64,7 @@ export default ({ loading, sort,mode, newsContents ,handleLoadMore,font,endConte
                     font={font}
                     mode={mode}
                     key={item.id}
+                    id={item.id}
                     title={item.title}
                     content={item.content}
                     url={item.ImageUrl}
@@ -74,6 +76,7 @@ export default ({ loading, sort,mode, newsContents ,handleLoadMore,font,endConte
                     font={font}
                     mode={mode}
                     key={item.id}
+                    id={item.id}
                     title={item.title}
                     content={item.content}
                     url={item.ImageUrl}
@@ -88,9 +91,9 @@ export default ({ loading, sort,mode, newsContents ,handleLoadMore,font,endConte
                 style={{
                     flex:1,
                     flexDirection: "column",
-                backgroundColor:mode ==="true" ? "black": "white",
+                    backgroundColor:mode ==="true" ? "black": "white",
             }}>
-                
+                {searchmode === "1" && <NewsSearch resultData={getData} text={text} />}
                 {newsContents ? <FlatList
                     data={newsContents}
                     renderItem={renderItem}
@@ -108,11 +111,11 @@ export default ({ loading, sort,mode, newsContents ,handleLoadMore,font,endConte
                             backgroundColor:mode ==="true" ? "black": "white",
                         }}
                     ><Text style={{
-                            fontSize: font + 4,
-                            color:mode ==="true" ? "white": "black",                        
+                    fontSize: font + 4,
+                            color:mode ==="true" ? "white": "black",
                 }}>기사 목록이 없습니다.</Text></View>}
                 {loadMore && <ActivityIndicator color="black" size="large" />}
-                 <AdMobBanner
+                <AdMobBanner
                         style={{
                             width: WIDTH,
                             alignItems: 'center',

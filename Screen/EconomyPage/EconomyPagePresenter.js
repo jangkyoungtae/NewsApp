@@ -9,12 +9,13 @@ import {
 } from 'expo-ads-admob';
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 import Constants from 'expo-constants';
+import NewsSearch from '../../Component/NewsSearch';
 
 const testID = 'ca-app-pub-3940256099942544/6300978111';
 const productionID = 'ca-app-pub-1441798552294944/7390799735';
 // Is a real device and running in production.
 const adUnitID = Constants.isDevice && !__DEV__ ? productionID : testID;
-export default ({ loading, sort,mode, newsContents ,handleLoadMore,font,endContent,getData}) => {
+export default ({ loading, sort,mode,text,searchmode, newsContents ,handleLoadMore,font,endContent,getData}) => {
     const [refreshing, setRefreshing] = useState(false);
     const [loadMore, setLoadMore] = useState(false);
     const isLoadMore = () => {
@@ -92,7 +93,7 @@ export default ({ loading, sort,mode, newsContents ,handleLoadMore,font,endConte
                     flexDirection: "column",
                     backgroundColor:mode ==="true" ? "black": "white",
             }}>
-                
+                {searchmode === "1" && <NewsSearch resultData={getData} text={text} />}
                 {newsContents ? <FlatList
                     data={newsContents}
                     renderItem={renderItem}

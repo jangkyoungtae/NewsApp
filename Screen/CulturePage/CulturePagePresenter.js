@@ -1,21 +1,21 @@
 
-
 import React, { useState } from 'react';
-import { ActivityIndicator,   FlatList, RefreshControl, Text, View ,Dimensions} from 'react-native';
+import { ActivityIndicator,   Dimensions,   FlatList, RefreshControl, Text, View } from 'react-native';
 import HeadLineContent from '../../Component/HeadLineContent';
 import PhotoContent from '../../Component/PhotoContent';
 import RecommendContent from '../../Component/RecommendContent';
 import {
   AdMobBanner,
 } from 'expo-ads-admob';
+const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 import Constants from 'expo-constants';
+import NewsSearch from '../../Component/NewsSearch';
 
 const testID = 'ca-app-pub-3940256099942544/6300978111';
-const productionID = 'ca-app-pub-1441798552294944/2850571889';
+const productionID = 'ca-app-pub-1441798552294944/7390799735';
 // Is a real device and running in production.
 const adUnitID = Constants.isDevice && !__DEV__ ? productionID : testID;
-const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
-export default ({ loading, sort, mode,newsContents ,handleLoadMore,font,endContent ,getData}) => {
+export default ({ loading, sort,mode,text,searchmode, newsContents ,handleLoadMore,font,endContent,getData}) => {
     const [refreshing, setRefreshing] = useState(false);
     const [loadMore, setLoadMore] = useState(false);
     const isLoadMore = () => {
@@ -46,13 +46,13 @@ export default ({ loading, sort, mode,newsContents ,handleLoadMore,font,endConte
     }
     const renderItem = ({ item }) => {
         if (item.ImageUrl !== "" && item.ImageUrl !==undefined) {            
-            
-            if(sort == 1 )
+           
+             if(sort == 1 )
                 return <RecommendContent
                     font={font}
                     mode={mode}
-                    id={item.id}
                     key={item.id}
+                    id={item.id}
                     title={item.title}
                     content={item.content}
                     imageUrl={item.ImageUrl}
@@ -87,16 +87,13 @@ export default ({ loading, sort, mode,newsContents ,handleLoadMore,font,endConte
     }
     return (
     <>
-            {!loading ?
-                <View
-                    style={{
-                        flex:1,
-                        flexDirection: "column",
-                        backgroundColor:mode ==="true" ? "black": "white",
-                        
-                    }}
-                >
-                            
+            {!loading ? <View
+                style={{
+                    flex:1,
+                    flexDirection: "column",
+                    backgroundColor:mode ==="true" ? "black": "white",
+            }}>
+                {searchmode === "1" && <NewsSearch resultData={getData} text={text} />}
                 {newsContents ? <FlatList
                     data={newsContents}
                     renderItem={renderItem}
@@ -116,10 +113,9 @@ export default ({ loading, sort, mode,newsContents ,handleLoadMore,font,endConte
                     ><Text style={{
                     fontSize: font + 4,
                             color:mode ==="true" ? "white": "black",
-                        }}>기사 목록이 없습니다.</Text></View>}
-                    
-                    {loadMore && <ActivityIndicator color="black" size="large" />}
-                    <AdMobBanner
+                }}>기사 목록이 없습니다.</Text></View>}
+                {loadMore && <ActivityIndicator color="black" size="large" />}
+                <AdMobBanner
                         style={{
                             width: WIDTH,
                             alignItems: 'center',

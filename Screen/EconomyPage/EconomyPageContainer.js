@@ -5,9 +5,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { connect } from 'react-redux';
 import { actionCreators } from '../../reducer/store';
 import { recomendApi } from '../../api/api';
+import { useNavigation } from '@react-navigation/core';
 
 
-function GoodPageContainer({  route,sort,font,mode,changeFontSize, changeSort,changeMode}){   
+function GoodPageContainer({  route,sort,font,mode,text,searchmode,changeFontSize,changeSearchText, changeSort,changeMode}){   
     const [searData, setSearData] = useState({
         loading: true,
         itemCount: 30,
@@ -15,9 +16,9 @@ function GoodPageContainer({  route,sort,font,mode,changeFontSize, changeSort,ch
         newsContentsError: [],
         endContent: false,
     });
-
-    const getData = async (refresh) => {
-        
+    const navigation = useNavigation();
+    const getData = async (refresh, content=text, search="") => {
+        changeSearchText(content);
         var category = "business";
         if (route.name === "IT") {
             category = 'technology';
@@ -30,6 +31,7 @@ function GoodPageContainer({  route,sort,font,mode,changeFontSize, changeSort,ch
         }else if (route.name === "과학") {
             category= 'science';
         }
+        
         if (!refresh) {
             setSearData({
                 loading: true,
@@ -39,7 +41,7 @@ function GoodPageContainer({  route,sort,font,mode,changeFontSize, changeSort,ch
                 endContent: false,
             });
         }
-        const [newsContents, newsContentsError] = await recomendApi.newsSearch(category,searData.itemCount);
+        const [newsContents, newsContentsError] = await recomendApi.newsSearch(category,searData.itemCount, content);
         const jsondata = JSON.parse(JSON.stringify(newsContents));
         if (refresh) {
              if (searData.itemCount> jsondata.length) {
@@ -60,7 +62,28 @@ function GoodPageContainer({  route,sort,font,mode,changeFontSize, changeSort,ch
                 });
             }
         } else {
-             if (searData.itemCount == 30) {
+            
+            if (search === "1") {
+                     if (searData.itemCount == 30) {
+                setSearData({
+                    loading: false,
+                    itemCount: searData.itemCount+10,
+                    newsContents: jsondata,
+                    newsContentsError,
+                    endContent: true,
+                });
+            } else {
+                setSearData({
+                    loading: false,
+                    itemCount: 30,
+                    newsContents: jsondata,
+                    newsContentsError,
+                    endContent: true,
+                });
+            }
+                     
+            } else {
+                if (searData.itemCount == 30) {
                 setSearData({
                     loading: false,
                     itemCount: searData.itemCount+10,
@@ -77,6 +100,9 @@ function GoodPageContainer({  route,sort,font,mode,changeFontSize, changeSort,ch
                     endContent: false,
                 });
             }
+                     
+            }
+            
         }
     }
     const isEmpty = function (value) {
@@ -184,10 +210,13 @@ function GoodPageContainer({  route,sort,font,mode,changeFontSize, changeSort,ch
     
     useEffect(() => {
        
-       Promise.all([getItemFromAsync("sort"),getItemFromAsync2("font"),getItemFromAsync3('mode')]).catch((err) => {
-            console.log("에러: ", err);            
-        });        
-        getData(false);
+        navigation.addListener('state',()=> {
+             Promise.all([getItemFromAsync("sort"),getItemFromAsync2("font"),getItemFromAsync3('mode')]).catch((err) => {
+                console.log("에러: ", err);                
+            });            
+            
+            getData(false,text,"1");
+        })
         
     }, []);
     return <EconomyPagePresenter 
@@ -195,6 +224,8 @@ function GoodPageContainer({  route,sort,font,mode,changeFontSize, changeSort,ch
         sort={sort}
         mode={mode}
         font={font}
+        text={text}
+        searchmode={searchmode}
         changeSort={boardSort}
         {...searData}
         handleLoadMore={handleLoadMore}
@@ -206,6 +237,8 @@ function mapStateToProps(state) {
         sort: state.sort,
         font: state.font,
         mode: state.mode,
+        text: state.text,
+        searchmode:state.searchmode
     };
 }
 function mapDispatchToProps(dispatch, ownProps) {
@@ -213,6 +246,8 @@ function mapDispatchToProps(dispatch, ownProps) {
         changeSort: sort => dispatch(actionCreators.changeSort(sort)),
         changeFontSize: (font) => dispatch(actionCreators.changeFontSize(font)),
         changeMode: (mode) => dispatch(actionCreators.changeMode(mode)),
+        changeSearchText: (text) => dispatch(actionCreators.changeSearchText(text)),
+        changeSearchMode: searchmode=>dispatch(actionCreators.changeSearchMode(searchmode)),
     };
 }
 export default connect(mapStateToProps,mapDispatchToProps)(GoodPageContainer);

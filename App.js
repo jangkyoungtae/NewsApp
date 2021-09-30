@@ -161,11 +161,7 @@ export default function App() {
             component={Historys}
             options={{ unmountOnBlur: true }}           
           />
-          <Drawer.Screen
-            name="뉴스 검색"
-            component={NewsSearch}
-           
-          />
+         
         </Drawer.Navigator>}
      
         
