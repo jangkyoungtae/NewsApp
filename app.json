@@ -2,7 +2,7 @@
   "expo": {
     "name": "뉴스인",
     "slug": "NewsIn",
-    "version": "4.0.0",
+    "version": "5.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "platforms": [
@@ -22,23 +22,27 @@
     "ios": {
       "supportsTablet": true
     },
-    
     "android": {
-      "versionCode": 4,
+      "versionCode": 5,
       "package": "com.js.newsin",
       "googleServicesFile": "./google-services.json",
       "config": {
-        "googleMobileAdsAppId": "ca-app-pub-1441798552294944~3278974963" 
+        "googleMobileAdsAppId": "ca-app-pub-1441798552294944~3278974963"
       },
-      "permissions": [ "VIBRATE", "RECEIVE_BOOT_COMPLETED", "WAKE_LOCK","FOREGROUND_SERVICE" ],
-      "adaptiveIcon": {        
+      "permissions": [
+        "VIBRATE",
+        "RECEIVE_BOOT_COMPLETED",
+        "WAKE_LOCK",
+        "FOREGROUND_SERVICE"
+      ],
+      "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
-    
+    },
+    "description": ""
   }
 }
