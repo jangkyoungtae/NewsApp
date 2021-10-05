@@ -54,6 +54,7 @@ export default ({ loading, sort, mode,text,searchmode,newsContents, handleLoadMo
                     font={font}
                     mode={mode}
                     key={item.id}
+                    id={item.id}
                     title={item.title}
                     content={item.content}
                     imageUrl={item.ImageUrl}
@@ -65,6 +66,7 @@ export default ({ loading, sort, mode,text,searchmode,newsContents, handleLoadMo
                     font={font}
                     mode={mode}
                     key={item.id}
+                    id={item.id}
                     title={item.title}
                     content={item.content}
                     url={item.ImageUrl}
@@ -76,6 +78,7 @@ export default ({ loading, sort, mode,text,searchmode,newsContents, handleLoadMo
                     font={font}
                     mode={mode}
                     key={item.id}
+                    id={item.id}
                     title={item.title}
                     content={item.content}
                     url={item.ImageUrl}
