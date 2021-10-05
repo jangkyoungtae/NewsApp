@@ -194,9 +194,7 @@ export default ({ loading, sort,mode, newsContents, font, navigation }) => {
                             justifyContent: 'center'
                         }}
                         bannerSize="banner"
-                        adUnitID={adUnitID} 
-                    servePersonalizedAds 
-                    onDidFailToReceiveAdWithError={"에러"} />
+                        adUnitID={adUnitID} />
             </View> : <ActivityIndicator size={'large'} color={'black'} />}
             </>
     );

@@ -1,21 +1,23 @@
 
+
 import React, { useState } from 'react';
-import { ActivityIndicator,   Dimensions,   FlatList, RefreshControl, Text, View } from 'react-native';
+import { ActivityIndicator,   FlatList, RefreshControl, Text, View ,Dimensions} from 'react-native';
 import HeadLineContent from '../../Component/HeadLineContent';
 import PhotoContent from '../../Component/PhotoContent';
 import RecommendContent from '../../Component/RecommendContent';
 import {
   AdMobBanner,
 } from 'expo-ads-admob';
-const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 import Constants from 'expo-constants';
 import NewsSearch from '../../Component/NewsSearch';
 
 const testID = 'ca-app-pub-3940256099942544/6300978111';
-const productionID = 'ca-app-pub-1441798552294944/7390799735';
+const productionID = 'ca-app-pub-1441798552294944/2850571889';
 // Is a real device and running in production.
 const adUnitID = Constants.isDevice && !__DEV__ ? productionID : testID;
-export default ({ loading, sort,mode,text,searchmode, newsContents ,handleLoadMore,font,endContent,getData}) => {
+const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
+export default ({ loading, sort, mode,text,searchmode,newsContents, handleLoadMore, font, endContent, getData}) => {
+    
     const [refreshing, setRefreshing] = useState(false);
     const [loadMore, setLoadMore] = useState(false);
     const isLoadMore = () => {
@@ -91,7 +93,7 @@ export default ({ loading, sort,mode,text,searchmode, newsContents ,handleLoadMo
                 style={{
                     flex:1,
                     flexDirection: "column",
-                    backgroundColor:mode ==="true" ? "black": "white",
+                backgroundColor:mode ==="true" ? "black": "white",
             }}>
                 {searchmode === "1" && <NewsSearch resultData={getData} text={text} />}
                 {newsContents ? <FlatList
@@ -111,20 +113,19 @@ export default ({ loading, sort,mode,text,searchmode, newsContents ,handleLoadMo
                             backgroundColor:mode ==="true" ? "black": "white",
                         }}
                     ><Text style={{
-                    fontSize: font + 4,
+                            fontSize: font + 4,
                             color:mode ==="true" ? "white": "black",
+                        
                 }}>기사 목록이 없습니다.</Text></View>}
                 {loadMore && <ActivityIndicator color="black" size="large" />}
-                <AdMobBanner
+                 <AdMobBanner
                         style={{
                             width: WIDTH,
                             alignItems: 'center',
                             justifyContent: 'center'
                         }}
                         bannerSize="banner"
-                        adUnitID={adUnitID} 
-                    servePersonalizedAds 
-                    onDidFailToReceiveAdWithError={"에러"} />
+                        adUnitID={adUnitID} />
             </View> : <ActivityIndicator size={'large'} color={'black'} />}
             </>
     );

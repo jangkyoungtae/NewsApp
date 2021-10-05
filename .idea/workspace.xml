@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="ReactNative" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="AutoImportSettings">
@@ -13,13 +14,9 @@
       <change beforePath="$PROJECT_DIR$/Screen/EconomyPage/EconomyPagePresenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screen/EconomyPage/EconomyPagePresenter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Screen/EnterPage/EnterPagePresenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screen/EnterPage/EnterPagePresenter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Screen/GoodPage/GoodPagePresenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screen/GoodPage/GoodPagePresenter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Screen/Historys/HistoryContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screen/Historys/HistoryContainer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Screen/Historys/HistoryPresenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screen/Historys/HistoryPresenter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Screen/ITPage/ITPagePresenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screen/ITPage/ITPagePresenter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Screen/SportsPage/SportsPagePresenter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screen/SportsPage/SportsPagePresenter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

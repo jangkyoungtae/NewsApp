@@ -12,7 +12,7 @@ import Constants from 'expo-constants';
 import NewsSearch from '../../Component/NewsSearch';
 
 const testID = 'ca-app-pub-3940256099942544/6300978111';
-const productionID = 'ca-app-pub-1441798552294944/2876839651';
+const productionID = 'ca-app-pub-1441798552294944/6598245205';
 // Is a real device and running in production.
 const adUnitID = Constants.isDevice && !__DEV__ ? productionID : testID;
 
@@ -54,6 +54,7 @@ export default ({ loading, sort, mode,text,searchmode,newsContents, handleLoadMo
                     font={font}
                     mode={mode}
                     key={item.id}
+                    id={item.id}
                     title={item.title}
                     content={item.content}
                     imageUrl={item.ImageUrl}
@@ -65,6 +66,7 @@ export default ({ loading, sort, mode,text,searchmode,newsContents, handleLoadMo
                     font={font}
                     mode={mode}
                     key={item.id}
+                    id={item.id}
                     title={item.title}
                     content={item.content}
                     url={item.ImageUrl}
@@ -76,6 +78,7 @@ export default ({ loading, sort, mode,text,searchmode,newsContents, handleLoadMo
                     font={font}
                     mode={mode}
                     key={item.id}
+                    id={item.id}
                     title={item.title}
                     content={item.content}
                     url={item.ImageUrl}
@@ -122,9 +125,7 @@ export default ({ loading, sort, mode,text,searchmode,newsContents, handleLoadMo
                             justifyContent: 'center'
                         }}
                         bannerSize="banner"
-                        adUnitID={adUnitID} 
-                    servePersonalizedAds 
-                    onDidFailToReceiveAdWithError={"에러"} />
+                        adUnitID={adUnitID}  />
             </View> : <ActivityIndicator size={'large'} color={'black'} />}
             </>
     );
