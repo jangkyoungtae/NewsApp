@@ -2,7 +2,7 @@
   "expo": {
     "name": "뉴스인",
     "slug": "NewsIn",
-    "version": "5.0.0",
+    "version": "5.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "platforms": [
@@ -23,7 +23,7 @@
       "supportsTablet": true
     },
     "android": {
-      "versionCode": 5,
+      "versionCode": 6,
       "package": "com.js.newsin",
       "googleServicesFile": "./google-services.json",
       "config": {

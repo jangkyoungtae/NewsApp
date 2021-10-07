@@ -73,13 +73,13 @@ export default function App() {
   }
   useEffect(() => {
     setLoading(true);
-    AsyncStorage.getItem("alram", (err,results) => {
-      if (results !== null || results !== undefined) {
-        console.log("알람", results);
-        hasNotificationPermission(results).then((result) => {
-        setExpoPushToken(result);
-    });
-      }
+      AsyncStorage.getItem("alram", (err,results) => {
+        if (results !== null || results !== undefined) {
+          console.log("알람", results);
+          hasNotificationPermission(results).then((result) => {
+            setExpoPushToken(result);
+          });
+        }
     });
     
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {

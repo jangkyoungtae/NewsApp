@@ -115,14 +115,14 @@ export default ({ loading, sort,mode,text,searchmode, newsContents ,handleLoadMo
                             color:mode ==="true" ? "white": "black",
                 }}>기사 목록이 없습니다.</Text></View>}
                 {loadMore && <ActivityIndicator color="black" size="large" />}
-                <AdMobBanner
+                {/* <AdMobBanner
                         style={{
                             width: WIDTH,
                             alignItems: 'center',
                             justifyContent: 'center'
                         }}
                         bannerSize="banner"
-                        adUnitID={adUnitID}  />
+                        adUnitID={adUnitID}  /> */}
             </View> : <ActivityIndicator size={'large'} color={'black'} />}
             </>
     );

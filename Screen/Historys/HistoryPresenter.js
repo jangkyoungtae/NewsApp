@@ -187,14 +187,14 @@ export default ({ loading, sort,mode, newsContents, font, navigation }) => {
                             color:mode ==="true" ? "white": "black",
                         
                     }}>기사 목록이 없습니다.</Text></View>}
-                 <AdMobBanner
+                 {/* <AdMobBanner
                         style={{
                             width: WIDTH,
                             alignItems: 'center',
                             justifyContent: 'center'
                         }}
                         bannerSize="banner"
-                        adUnitID={adUnitID} />
+                        adUnitID={adUnitID} /> */}
             </View> : <ActivityIndicator size={'large'} color={'black'} />}
             </>
     );
